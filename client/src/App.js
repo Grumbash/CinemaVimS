@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import './App.css';
-/*
-          {console.log(this.state.users.map(user=>user.name))}
-*/
+import LoginForm from './components/LoginForm.js';
+//{this.state.users ? this.state.users.map(user => {
+//     return <li key={user.id}>{user.name}</li>
+// }) : <li key="no-data">No data</li>}
 class App extends Component {
-  // constructor(props){
-  //   super(props)
-  //   this.state = {
-  //     users:[]
-  //   }
-  //   this.setState = this.setState.bind(this)
-  // }
-  state = {
-    users:[]
+  constructor(props){
+    super(props)
+
+    this.state = {
+      users:[]
+    }
+
+    this.setState = this.setState.bind(this);
+
   }
+
   componentDidMount(){
     fetch('/users')
       .then(res => res.json())
@@ -25,10 +26,9 @@ class App extends Component {
       <div className="App">
         <h1>Users</h1>
         <ul>
-          {this.state.users.map(user => {
-            return <li key={user.id}>{user.name}</li>
-          })}
+          {this.state.users.map(user => <li key={user.id}>{user.name}</li>)}
         </ul>
+        <LoginForm/>
       </div>
     );
   }
