@@ -1,24 +1,23 @@
-import React, { Component } from 'react';
-import LoginForm from './components/LoginForm.js';
+import React, { Component } from "react";
+import LoginForm from "./components/LoginForm.js";
 //{this.state.users ? this.state.users.map(user => {
 //     return <li key={user.id}>{user.name}</li>
 // }) : <li key="no-data">No data</li>}
 class App extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.state = {
-      users:[]
-    }
+      users: []
+    };
 
     this.setState = this.setState.bind(this);
-
   }
 
-  componentDidMount(){
-    fetch('/users')
+  componentDidMount() {
+    fetch("/api/users")
       .then(res => res.json())
-      .then(users => this.setState({users}));
+      .then(users => this.setState({ users }));
   }
   render() {
     /*Undefined check and/or preloader*/
@@ -28,7 +27,7 @@ class App extends Component {
         <ul>
           {this.state.users.map(user => <li key={user.id}>{user.name}</li>)}
         </ul>
-        <LoginForm/>
+        <LoginForm />
       </div>
     );
   }
