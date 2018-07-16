@@ -1,32 +1,28 @@
 import React, { Component } from "react";
-import LoginForm from "./components/LoginForm.js";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import Navbar from "./commponents/layout/Navbar";
+import Footer from "./commponents/layout/Footer";
+import Landing from "./commponents/layout/Landing";
+import Register from "./commponents/auth/Register";
+import Login from "./commponents/auth/Login";
+
+import "./App.css";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      users: []
-    };
-
-    this.setState = this.setState.bind(this);
-  }
-
-  // componentDidMount() {
-  //   fetch("/api/users")
-  //     .then(res => res.json())
-  //     .then(users => this.setState({ users }));
-  // }
   render() {
-    /*Undefined check and/or preloader*/
     return (
-      <div className="App">
-        <h1>Users</h1>
-        <ul>
-          {this.state.users.map(user => <li key={user.id}>{user.name}</li>)}
-        </ul>
-        <LoginForm />
-      </div>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <Route exact path="/" component={Landing} />
+          <div className="container">
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+          </div>
+          <Footer />
+        </div>
+      </Router>
     );
   }
 }
