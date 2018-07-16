@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import LoginForm from "./components/LoginForm.js";
-//{this.state.users ? this.state.users.map(user => {
-//     return <li key={user.id}>{user.name}</li>
-// }) : <li key="no-data">No data</li>}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -14,11 +12,11 @@ class App extends Component {
     this.setState = this.setState.bind(this);
   }
 
-  componentDidMount() {
-    fetch("/api/users")
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
-  }
+  // componentDidMount() {
+  //   fetch("/api/users")
+  //     .then(res => res.json())
+  //     .then(users => this.setState({ users }));
+  // }
   render() {
     /*Undefined check and/or preloader*/
     return (
