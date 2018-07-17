@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
 
-// Loade Input Validation
+// Load Input Validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
@@ -44,7 +44,8 @@ router.post("/register", (req, res) => {
         name: req.body.name,
         email: req.body.email,
         avatar,
-        password: req.body.password
+        password: req.body.password,
+        isAdmin: false
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -61,7 +62,7 @@ router.post("/register", (req, res) => {
   });
 });
 
-// @route   GET api/users/login
+// @route   POST api/users/login
 // @desc    Login User / Return JWT Token
 // @access  Public
 
@@ -89,8 +90,14 @@ router.post("/login", (req, res) => {
       if (isMatch) {
         // User Matched
 
-        const payload = { id: user.id, name: user.name, avatar: user.avatar }; // crate JWT Payload
+        const payload = {
+          id: user.id,
+          name: user.name,
+          avatar: user.avatar,
+          isAdmin: user.isAdmin
+        }; // crate JWT Payload
 
+        //jwt.sign(payload, secretOrPrivateKey, [options, callback])
         // Sing Token
         jwt.sign(
           payload,
@@ -103,6 +110,8 @@ router.post("/login", (req, res) => {
             });
           }
         );
+        if (user.isAdmin) {
+        }
       } else {
         errors.password = "Password incorrect";
         return res.status(400).json({ errors });
