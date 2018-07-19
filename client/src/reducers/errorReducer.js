@@ -1,4 +1,4 @@
-import { GET_ERRORS } from "../actions/typres";
+import { GET_ERRORS } from '../actions/types';
 
 const initialState = {};
 
