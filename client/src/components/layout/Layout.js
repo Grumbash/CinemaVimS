@@ -17,7 +17,7 @@ class Landing extends Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 text-center">
-                <h1 className="display-3 mb-4">Developer Vim Style</h1>
+                <h1 className="display-3 mb-4">Cinema Vim Style</h1>
                 <p className="lead">
                   {" "}
                   Book a tickets, share opinions, enjoi movies
