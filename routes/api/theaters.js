@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const mogoose = require("mongoose");
 const passport = require("passport");
 
 // Theater Model
@@ -61,7 +60,7 @@ router.post(
       // Return any errors with 400 status
       return res.status(400).json(errors);
     }
-    fields = {};
+    const fields = {};
 
     if (req.body.name) fields.name = req.body.name;
     if (req.body.city) fields.city = req.body.city;
@@ -129,7 +128,7 @@ router.post(
       // Return any errors with 400 status
       return res.status(400).json(errors);
     }
-    fields = {};
+    const fields = {};
 
     if (req.body.No) fields.No = req.body.No;
     if (req.body.theaterId) fields.theaterId = req.body.theaterId;

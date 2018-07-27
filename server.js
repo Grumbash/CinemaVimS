@@ -6,6 +6,7 @@ const passport = require("passport");
 const users = require("./routes/api/users");
 const theaters = require("./routes/api/theaters");
 const movie = require("./routes/api/movies");
+const show = require("./routes/api/shows");
 
 const app = express();
 
@@ -35,6 +36,7 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 app.use("/api/theaters", theaters);
 app.use("/api/movies", movie);
+app.use("/api/shows", show);
 
 const port = process.env.PORT || 1337;
 

@@ -28,7 +28,7 @@ router.post(
     // Check Validation return any errors with 400 status
     if (!isValid) return res.status(400).json(errors);
 
-    fields = {};
+    const fields = {};
 
     if (req.body.title) fields.title = req.body.title;
     if (req.body.duration) fields.duration = req.body.duration;

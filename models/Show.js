@@ -6,11 +6,13 @@ const Schema = mongoose.Schema;
 const ShowSchema = new Schema({
   hallId: {
     type: Schema.Types.ObjectId,
-    ref: "halls"
+    ref: "halls",
+    required: true
   },
   movieId: {
     type: Schema.Types.ObjectId,
-    ref: "movies"
+    ref: "movies",
+    required: true
   },
   seats: {
     type: Array,
