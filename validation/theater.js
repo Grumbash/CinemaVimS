@@ -6,6 +6,7 @@ module.exports = function validateTheaterInputs(data) {
 
   data.name = !isEmpty(data.name) ? data.name : "";
   data.city = !isEmpty(data.city) ? data.city : "";
+  data.id = !isEmpty(data.id) ? data.id : "";
 
   if (!Validator.isLength(data.name, { min: 2 })) {
     errors.name = "Name needs to be 2 or more characters";
@@ -18,7 +19,9 @@ module.exports = function validateTheaterInputs(data) {
   if (Validator.isEmpty(data.city)) {
     errors.city = "City field is required";
   }
-
+  if (!Validator.isMongoId(data.id)) {
+    errors.id = "Use the mongoDB id format";
+  }
   return {
     errors,
     isValid: isEmpty(errors)

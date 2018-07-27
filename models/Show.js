@@ -4,16 +4,18 @@ const Schema = mongoose.Schema;
 // Create Schema
 
 const ShowSchema = new Schema({
-  movie: {
+  hallId: {
+    type: Schema.Types.ObjectId,
+    ref: "halls"
+  },
+  movieId: {
     type: Schema.Types.ObjectId,
     ref: "movies"
   },
-  seats: [
-    {
-      type: Array,
-      reserved: Boolean
-    }
-  ],
+  seats: {
+    type: Array,
+    required: true
+  },
   date: Date
 });
 
