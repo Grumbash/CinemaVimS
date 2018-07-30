@@ -14,11 +14,6 @@ const ShowSchema = new Schema({
     ref: "movies",
     required: true
   },
-  seats: {
-    type: Schema.Types.ObjectId,
-    ref: "seats",
-    required: true
-  },
   date: Date
 });
 

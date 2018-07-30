@@ -20,7 +20,6 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.body.seats);
     const { errors, isValid } = validateShowInputs(req.body);
 
     //Check Permission
@@ -37,10 +36,9 @@ router.post(
 
     const fields = {};
 
-    if (req.body.seats) req.body.seats = fields.seats;
-    if (req.body.hallId) req.body.hallId = fields.hallId;
-    if (req.body.movieId) req.body.movieId = fields.movieId;
-    if (req.body.date) req.body.date = fields.date;
+    if (req.body.hallId) fields.hallId = req.body.hallId;
+    if (req.body.movieId) fields.movieId = req.body.movieId;
+    if (req.body.date) fields.date = req.body.date;
 
     Show.findOne({ _id: req.body.id }).then(show => {
       if (show) {

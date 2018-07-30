@@ -12,10 +12,6 @@ const SeatsSchema = new Schema({
   rows: [
     {
       No: Number,
-      seatsQuantity: {
-        type: Number,
-        required: true
-      },
       seats: [
         {
           VIP: {
