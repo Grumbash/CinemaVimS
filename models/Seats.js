@@ -6,17 +6,18 @@ const Schema = mongoose.Schema;
 const SeatsSchema = new Schema({
   showId: {
     type: Schema.Types.ObjectId,
-    ref: "shows"
+    ref: "shows",
+    required: true
   },
   rows: [
     {
       No: Number,
+      seatsQuantity: {
+        type: Number,
+        required: true
+      },
       seats: [
         {
-          quantity: {
-            type: Number,
-            required: true
-          },
           VIP: {
             type: Boolean,
             default: false

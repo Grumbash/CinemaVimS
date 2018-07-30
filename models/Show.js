@@ -15,7 +15,8 @@ const ShowSchema = new Schema({
     required: true
   },
   seats: {
-    type: Array,
+    type: Schema.Types.ObjectId,
+    ref: "seats",
     required: true
   },
   date: Date
