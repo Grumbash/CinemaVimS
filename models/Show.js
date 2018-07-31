@@ -14,6 +14,10 @@ const ShowSchema = new Schema({
     ref: "movies",
     required: true
   },
+  rowsId: {
+    type: Schema.Types.ObjectId,
+    ref: "rows"
+  },
   date: Date
 });
 

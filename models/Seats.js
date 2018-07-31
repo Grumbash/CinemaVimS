@@ -4,29 +4,27 @@ const Schema = mongoose.Schema;
 // Create Schema
 
 const SeatsSchema = new Schema({
-  showId: {
+  rowId: {
     type: Schema.Types.ObjectId,
-    ref: "shows",
+    ref: "rows",
     required: true
   },
-  rows: [
-    {
-      No: Number,
-      seats: [
-        {
-          VIP: {
-            type: Boolean,
-            default: false
-          },
-          price: Number,
-          reserved: {
-            type: Boolean,
-            default: false
-          }
-        }
-      ]
-    }
-  ]
+  No: {
+    type: Number,
+    required: true
+  },
+  VIP: {
+    type: Boolean,
+    default: false
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  reserved: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = Seats = mongoose.model("seats", SeatsSchema, "seats");

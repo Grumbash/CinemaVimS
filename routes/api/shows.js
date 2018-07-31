@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-// Import the show model
-const Show = require("../../models/Show");
-
-// Validation
-const validateShowInputs = require("../../validation/show");
+//Load Controllers
+const postShowController = require("../../controllers/showsControllers");
+const getShowsController = require("../../controllers/showsControllers");
+const getShowByIdController = require("../../controllers/showsControllers");
+const deleteShowByIdController = require("../../controllers/showsControllers");
 
 // @route   GET api/shows/test
 // @desc    Tests shows route
@@ -19,51 +19,26 @@ router.get("/test", (req, res) => res.json({ msg: "Shows is Works" }));
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const { errors, isValid } = validateShowInputs(req.body);
-
-    //Check Permission
-    if (!req.user.isAdmin) {
-      // Return 401 error
-      return res.status(401).json("Insufficient rights");
-    }
-
-    // Check Validation
-    if (!isValid) {
-      // Return any errors with 400 status
-      return res.status(400).json(errors);
-    }
-
-    const fields = {};
-
-    if (req.body.hallId) fields.hallId = req.body.hallId;
-    if (req.body.movieId) fields.movieId = req.body.movieId;
-    if (req.body.date) fields.date = req.body.date;
-
-    Show.findOne({ _id: req.body.id }).then(show => {
-      if (show) {
-        // Update
-        Show.findOneAndUpdate(
-          { _id: req.body.id },
-          { $set, fields },
-          { new: true }
-        )
-          .then(show => res.json(show))
-          .catch(err => res.json(err, "Can't update shows profile"));
-      } else {
-        // Create and save new Show profile
-
-        new Show(fields).save().then(show => res.json(show));
-      }
-    });
-  }
+  postShowController
 );
 
 // @route   GET api/shows
 // @desc    Get array of shows
 // @access  Public
-router.get("/", (req, res) => {
-  Show.find().then(shows => res.json(shows));
-});
+router.get("/", getShowsController);
+
+// @route   GET api/shows/:id
+// @desc    Get show by id
+// @access  Public
+router.get("/:id", getShowByIdController);
+
+// @route   DELETE api/shows/:id
+// @desc    Delete show by ID
+// @access  Private
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  deleteShowByIdController
+);
 
 module.exports = router;

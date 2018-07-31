@@ -9,11 +9,11 @@ module.exports = function validateShowInputs(data) {
   data.date = !isEmpty(data.date) ? data.date : "";
 
   if (!Validator.isMongoId(data.hallId)) {
-    errors.hallId = "Hall ID must be mongoDB ID format";
+    errors.hallId = "Halls ID must be mongoDB ID format";
   }
 
   if (!Validator.isMongoId(data.movieId)) {
-    errors.movieId = "Movie ID must be mongoDB ID format";
+    errors.movieId = "Movies ID must be mongoDB ID format";
   }
 
   if (!Validator.isISO8601(data.date)) {
