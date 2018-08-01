@@ -7,45 +7,23 @@ const Hall = require("../models/Hall");
 const validateTheaterInputs = require("../validation/theater");
 const validateHallInputs = require("../validation/hall");
 
+// Unic post functions
+const post_UniversalForAdmin = require("./methods/admin/post_UniversalForAdmin");
+
+// Unic get functions
+const {
+  getAll_UniversalForAdmin
+} = require("./methods/admin/get_UniversalForAdmin");
+
 exports.postTheaterConrtroller = (req, res, next) => {
-  const { errors, isValid } = validateTheaterInputs(req.body);
-
-  //Check Permission
-  if (!req.user.isAdmin) {
-    // Return 401 error
-    return res.status(401).json("Insufficient rights");
-  }
-
-  // Check Validation
-  if (!isValid) {
-    // Return any errors with 400 status
-    return res.status(400).json(errors);
-  }
-  const fields = {};
-
-  if (req.body.name) fields.name = req.body.name;
-  if (req.body.city) fields.city = req.body.city;
-
-  Theater.findOne({ _id: req.body.id }).then(theater => {
-    if (theater) {
-      // Update
-      Theater.findOneAndUpdate(
-        { _id: req.body.id },
-        { $set: fields },
-        { new: true }
-      )
-        .then(theater => res.json(theater))
-        .catch(err => res.json(err, "Can't update theater profile"));
-    } else {
-      // Create
-
-      // Save Theater profile
-      new Theater(fields).save().then(theater => res.json(theater));
-    }
+  post_UniversalForAdmin(req, res, {
+    Model: Theater,
+    validateFunc: validateTheaterInputs
   });
 };
+
 exports.getTheatersConrtroller = (req, res, next) => {
-  Theater.find().then(thears => res.json(thears));
+  getAll_UniversalForAdmin(req, res, { Model: Theater });
 };
 exports.getTheaterByIdConrtroller = (req, res, next) => {
   const errors = {};

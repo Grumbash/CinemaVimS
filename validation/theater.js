@@ -19,8 +19,10 @@ module.exports = function validateTheaterInputs(data) {
   if (Validator.isEmpty(data.city)) {
     errors.city = "City field is required";
   }
-  if (!Validator.isMongoId(data.id)) {
-    errors.id = "Use the mongoDB id format";
+  if (!Validator.isEmpty(data.id)) {
+    if (!Validator.isMongoId(data.id)) {
+      errors.id = "Use the mongoDB ID format";
+    }
   }
   return {
     errors,

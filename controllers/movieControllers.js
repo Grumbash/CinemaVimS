@@ -9,7 +9,7 @@ const post_UniversalForAdmin = require("./methods/admin/post_UniversalForAdmin")
 
 exports.postMoviesController = (req, res, next) => {
   post_UniversalForAdmin(req, res, {
-    model: Movie,
+    Model: Movie,
     validateFunc: validateMovieInputs
   });
 };

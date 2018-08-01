@@ -22,8 +22,8 @@ module.exports = post_UniversalForAdmin = (req, res, data) => {
 
   const fields = Object.assign({}, req.body);
 
-  data.Model.findById(fields.id).then(elem => {
-    if (elem) {
+  if (fields.id) {
+    data.Model.findById(fields.id).then(elem => {
       data.Model.findOneAndUpdate(
         { _id: fields.id },
         { $set: fields },
@@ -31,8 +31,8 @@ module.exports = post_UniversalForAdmin = (req, res, data) => {
       )
         .then(elem => res.json(elem))
         .catch(err => res.json(err, `Can't update`));
-    } else {
-      new data.Model(fields).save().then(elem => res.json(elem));
-    }
-  });
+    });
+  } else {
+    new data.Model(fields).save().then(elem => res.json(elem));
+  }
 };

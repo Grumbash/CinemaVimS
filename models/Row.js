@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 // Create Schema
 
 const RowsSchema = new Schema({
-  showId: {
+  hall: {
     type: Schema.Types.ObjectId,
-    ref: "shows",
+    ref: "halls",
     required: true
   },
   No: {
