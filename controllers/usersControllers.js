@@ -10,7 +10,7 @@ const validateLoginInput = require("../validation/login");
 // Loade user model
 const User = require("../models/User");
 
-module.exports = postUserRegisterController = (req, res, next) => {
+exports.postUserRegisterController = (req, res, next) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   // Check Validation
@@ -51,7 +51,7 @@ module.exports = postUserRegisterController = (req, res, next) => {
   });
 };
 
-module.exports = postUserLoginController = (req, res, next) => {
+exports.postUserLoginController = (req, res, next) => {
   const { errors, isValid } = validateLoginInput(req.body);
 
   // Check Validation
@@ -105,7 +105,7 @@ module.exports = postUserLoginController = (req, res, next) => {
   });
 };
 
-module.exports = getCurrentUserController = (req, res, next) => {
+exports.getCurrentUserController = (req, res, next) => {
   res.json({
     id: req.user.id,
     name: req.user.name,

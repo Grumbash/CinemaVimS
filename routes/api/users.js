@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 // Load Controllers
-const postUserRegisterController = require("../../controllers/usersControllers");
-const postUserLoginController = require("../../controllers/usersControllers");
-const getCurrentUserController = require("../../controllers/usersControllers");
+const {
+  postUserRegisterController,
+  postUserLoginController,
+  getCurrentUserController
+} = require("../../controllers/usersControllers");
 
 // @route   GET api/users/test
 // @desc    Tests users route

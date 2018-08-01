@@ -7,7 +7,7 @@ const Hall = require("../models/Hall");
 const validateTheaterInputs = require("../validation/theater");
 const validateHallInputs = require("../validation/hall");
 
-module.exports = postTheaterConrtroller = (req, res, next) => {
+exports.postTheaterConrtroller = (req, res, next) => {
   const { errors, isValid } = validateTheaterInputs(req.body);
 
   //Check Permission
@@ -44,10 +44,10 @@ module.exports = postTheaterConrtroller = (req, res, next) => {
     }
   });
 };
-module.exports = getTheatersConrtroller = (req, res, next) => {
+exports.getTheatersConrtroller = (req, res, next) => {
   Theater.find().then(thears => res.json(thears));
 };
-module.exports = getTheaterByIdConrtroller = (req, res, next) => {
+exports.getTheaterByIdConrtroller = (req, res, next) => {
   const errors = {};
 
   Theater.findOne({ _id: req.params.id })
@@ -60,7 +60,7 @@ module.exports = getTheaterByIdConrtroller = (req, res, next) => {
     })
     .catch(err => res.status(404).json(err));
 };
-module.exports = deleteTheaterByIdConrtroller = (req, res, next) => {
+exports.deleteTheaterByIdConrtroller = (req, res, next) => {
   //Check Permission
   if (!req.user.isAdmin) {
     // Return 401 error
@@ -75,7 +75,7 @@ module.exports = deleteTheaterByIdConrtroller = (req, res, next) => {
       .catch(err => res.json(err));
   });
 };
-module.exports = postHallConrtroller = (req, res, next) => {
+exports.postHallConrtroller = (req, res, next) => {
   const { errors, isValid } = validateHallInputs(req.body);
 
   //Check Permission
@@ -113,16 +113,16 @@ module.exports = postHallConrtroller = (req, res, next) => {
     }
   });
 };
-module.exports = getHallsConrtroller = (req, res) => {
+exports.getHallsConrtroller = (req, res) => {
   Hall.find()
     .where({ theaterId: req.params.id })
     .then(halls => res.json(halls));
 };
-module.exports = getHallByIdConrtroller = (req, res) => {
+exports.getHallByIdConrtroller = (req, res) => {
   Hall.findById(req.params.hall_id).then(hall => res.json(hall));
 };
 
-module.exports = deleteHallByIdConrtroller = (req, res) => {
+exports.deleteHallByIdConrtroller = (req, res) => {
   //Check Permission
   if (!req.user.isAdmin) {
     // Return 401 error

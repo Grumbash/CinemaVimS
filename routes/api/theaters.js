@@ -3,14 +3,16 @@ const router = express.Router();
 const passport = require("passport");
 
 //Load Controllers
-const postTheaterConrtroller = require("../../controllers/theatersControllers");
-const getTheatersConrtroller = require("../../controllers/theatersControllers");
-const getTheaterByIdConrtroller = require("../../controllers/theatersControllers");
-const deleteTheaterByIdConrtroller = require("../../controllers/theatersControllers");
-const postHallConrtroller = require("../../controllers/theatersControllers");
-const getHallsConrtroller = require("../../controllers/theatersControllers");
-const getHallByIdConrtroller = require("../../controllers/theatersControllers");
-const deleteHallByIdConrtroller = require("../../controllers/theatersControllers");
+const {
+  postTheaterConrtroller,
+  getTheatersConrtroller,
+  getTheaterByIdConrtroller,
+  deleteTheaterByIdConrtroller,
+  postHallConrtroller,
+  getHallsConrtroller,
+  getHallByIdConrtroller,
+  deleteHallByIdConrtroller
+} = require("../../controllers/theatersControllers");
 
 // @route   GET api/theaters/test
 // @desc    Tests theater route

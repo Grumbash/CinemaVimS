@@ -4,7 +4,7 @@ const Show = require("../models/Show");
 // Load Validaton inputs
 const validateShowInputs = require("../validation/show");
 
-module.exports = postShowController = (req, res) => {
+exports.postShowController = (req, res) => {
   const { errors, isValid } = validateShowInputs(req.body);
 
   //Check Permission
@@ -43,21 +43,21 @@ module.exports = postShowController = (req, res) => {
   });
 };
 
-module.exports = getShowsController = (req, res) => {
+exports.getShowsController = (req, res) => {
   Show.find()
     .populate("movieId")
     .populate("hallId")
     .then(shows => res.json(shows));
 };
 
-module.exports = getShowByIdController = (req, res) => {
+exports.getShowByIdController = (req, res) => {
   Show.findById(req.params.id)
     .populate("movieId")
     .populate("hallId")
     .then(show => res.json(show));
 };
 
-module.exports = deleteShowByIdController = (req, res) => {
+exports.deleteShowByIdController = (req, res) => {
   //Check Permission
   if (!req.user.isAdmin) {
     // Return 401 error

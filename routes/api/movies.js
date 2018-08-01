@@ -3,10 +3,12 @@ const router = express.Router();
 const passport = require("passport");
 
 // Load Controllers
-const postMoviesController = require("../../controllers/movieControllers");
-const getMovieByTitleController = require("../../controllers/movieControllers");
-const getMoviesController = require("../../controllers/movieControllers");
-const deleteMovieByIdController = require("../../controllers/movieControllers");
+const {
+  postMoviesController,
+  getMovieByTitleController,
+  getMoviesController,
+  deleteMovieByIdController
+} = require("../../controllers/movieControllers");
 
 // @route   GET api/movies/test
 // @desc    Tests movie route

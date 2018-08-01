@@ -1,3 +1,10 @@
+/* 
+@Accept 
+data: {
+  Model: ModelName,
+  validateFunc: validateFuncName 
+}
+*/
 module.exports = post_UniversalForAdmin = (req, res, data) => {
   const { errors, isValid } = data.validateFunc(req.body);
 

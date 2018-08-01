@@ -3,10 +3,12 @@ const router = express.Router();
 const passport = require("passport");
 
 //Load Controllers
-const postShowController = require("../../controllers/showsControllers");
-const getShowsController = require("../../controllers/showsControllers");
-const getShowByIdController = require("../../controllers/showsControllers");
-const deleteShowByIdController = require("../../controllers/showsControllers");
+const {
+  postShowController,
+  getShowsController,
+  getShowByIdController,
+  deleteShowByIdController
+} = require("../../controllers/showsControllers");
 
 // @route   GET api/shows/test
 // @desc    Tests shows route

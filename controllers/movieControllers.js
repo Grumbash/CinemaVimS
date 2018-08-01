@@ -4,45 +4,21 @@ const Movie = require("../models/Movie");
 // Validation
 const validateMovieInputs = require("../validation/movie");
 
-module.exports = postMoviesController = (req, res, next) => {
-  // Check Permission and return 401 error if isn't admin
-  if (!req.user.isAdmin) return res.status(401).json("Insufficient rights");
+// Combain function
+const post_UniversalForAdmin = require("./methods/admin/post_UniversalForAdmin");
 
-  const { errors, isValid } = validateMovieInputs(req.body);
-
-  // Check Validation return any errors with 400 status
-  if (!isValid) return res.status(400).json(errors);
-
-  const fields = {};
-
-  if (req.body.title) fields.title = req.body.title;
-  if (req.body.duration) fields.duration = req.body.duration;
-  if (req.body.shows) fields.shows = req.body.shows;
-
-  Movie.findOne({ _id: req.body.id }).then(movie => {
-    if (movie) {
-      // Update
-      Movie.findOneAndUpdate(
-        { _id: req.body.id },
-        { $set: fields },
-        { new: true }
-      )
-        .then(movie => res.json(movie))
-        .catch(err => res.json("Can't update movie profile"));
-    } else {
-      // Create
-
-      // Save Movie profile
-      new Movie(fields).save().then(movie => res.json(movie));
-    }
+exports.postMoviesController = (req, res, next) => {
+  post_UniversalForAdmin(req, res, {
+    model: Movie,
+    validateFunc: validateMovieInputs
   });
 };
 
-module.exports = getMoviesController = (req, res) => {
+exports.getMoviesController = (req, res) => {
   Movie.find().then(moviesArr => res.json(moviesArr));
 };
 
-module.exports = getMovieByTitleController = (req, res, next) => {
+exports.getMovieByTitleController = (req, res, next) => {
   const errors = {};
 
   Movie.findOne({ title: req.params.title })
@@ -56,7 +32,7 @@ module.exports = getMovieByTitleController = (req, res, next) => {
     .catch(err => res.status(404).json(err));
 };
 
-module.exports = deleteMovieByIdController = (req, res) => {
+exports.deleteMovieByIdController = (req, res) => {
   // Check Permission and return 401 error if isn't admin
   if (!req.user.isAdmin) return res.status(401).json("Insufficient rights");
 
