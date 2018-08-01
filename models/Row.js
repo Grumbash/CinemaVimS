@@ -11,7 +11,8 @@ const RowsSchema = new Schema({
   },
   No: {
     type: Number,
-    required: true
+    required: true,
+    unique: true
   },
   seats: [
     {

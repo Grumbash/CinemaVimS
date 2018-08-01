@@ -1,27 +1,35 @@
 const Validator = require("validator");
 const isEmpty = require("./is-empty");
+const notEmpty = require("./mustnt-empty");
+const mustBe = require("./must-be");
 
 module.exports = function validateRowsInputs(data) {
   let errors = {};
 
-  data.showId = !isEmpty(data.showId) ? data.showId : "";
   data.No = !isEmpty(data.No) ? data.No : "";
-  data.seats = !isEmpty(data.seats) ? data.seats : "";
+  data.hall = !isEmpty(data.hall) ? data.hall : "";
 
-  if (Validator.isEmpty(data.showId)) {
-    errors.showId = "showId field must not be empty";
+  if (data.seats) {
+    if (!Validator.isMongoId(data.seats)) {
+      errors.seats = mustBe("Seats field", "mongoDB ID format");
+    }
   }
 
-  if (!Validator.isMongoId(data.showId)) {
-    errors.showId = "showId field must be mongoDB id format";
+  if (Validator.isEmpty(data.No)) {
+    errors.No = notEmpty("No");
   }
 
-  if (!Validator.isEmpty(data.seats)) {
-    data.seats.forEach(seat => {
-      if (!Validator.isMongoId(seat)) {
-        errors.seats = "seats field must be mongoDB id format";
-      }
-    });
+  if (data.No) {
+    if (!Validator.isInt(data.No.toString())) {
+      errors.No = mustBe("No", "integer");
+    }
+  }
+  if (Validator.isEmpty(data.hall)) {
+    errors.hall = notEmpty("Hall field");
+  }
+
+  if (!Validator.isMongoId(data.hall)) {
+    errors.hall = mustBe("Hall field", "mongoDB ID format");
   }
 
   return {

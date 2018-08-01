@@ -4,10 +4,6 @@ const Schema = mongoose.Schema;
 // Create Schema
 
 const SeatsSchema = new Schema({
-  row: {
-    type: Schema.Types.ObjectId,
-    ref: "rows"
-  },
   No: {
     type: Number,
     required: true
@@ -16,28 +12,10 @@ const SeatsSchema = new Schema({
     type: Boolean,
     default: false
   },
-  shows: [
+  reservation: [
     {
-      price: {
-        type: Number,
-        required: true
-      },
-      show: {
-        type: Schema.Types.ObjectId,
-        ref: "shows"
-      },
-      reserved: {
-        type: Boolean,
-        default: false
-      },
-      from: {
-        type: Date,
-        default: Date.now
-      },
-      to: {
-        //Incriment Date + 15 min???
-        type: Date
-      }
+      type: Schema.Types.ObjectId,
+      ref: "reservations"
     }
   ]
 });
