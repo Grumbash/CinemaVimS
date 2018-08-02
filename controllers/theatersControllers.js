@@ -94,10 +94,13 @@ exports.postHallConrtroller = (req, res, next) => {
 exports.getHallsConrtroller = (req, res) => {
   Hall.find()
     .where({ theaterId: req.params.id })
+    .populate("theaterId")
     .then(halls => res.json(halls));
 };
 exports.getHallByIdConrtroller = (req, res) => {
-  Hall.findById(req.params.hall_id).then(hall => res.json(hall));
+  Hall.findById(req.params.hall_id)
+    .populate("theaterId")
+    .then(hall => res.json(hall));
 };
 
 exports.deleteHallByIdConrtroller = (req, res) => {

@@ -17,8 +17,7 @@ const ReservationSchema = new Schema({
     default: false
   },
   from: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   to: {
     //Incriment Date + 15 min???

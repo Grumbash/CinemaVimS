@@ -16,14 +16,24 @@ exports.postShowController = (req, res) => {
 exports.getShowsController = (req, res) => {
   Show.find()
     .populate("movieId")
-    .populate("hallId")
+    .populate({
+      path: "hallId",
+      populate: {
+        path: "theaterId"
+      }
+    })
     .then(shows => res.json(shows));
 };
 
 exports.getShowByIdController = (req, res) => {
   Show.findById(req.params.id)
     .populate("movieId")
-    .populate("hallId")
+    .populate({
+      path: "hallId",
+      populate: {
+        path: "theaterId"
+      }
+    })
     .then(show => res.json(show));
 };
 

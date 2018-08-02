@@ -11,7 +11,10 @@ const {
   postRowsControllerAdmin,
   getAllRowsController,
   getRowByIdController,
-  deleteRowByIdController
+  deleteRowByIdController,
+  putReservationBySeatIdControllerAdmin,
+  putReservationBySeatIdControllerUser,
+  getReservationBySeatIdController
 } = require("../../controllers/seatsConntrollers");
 
 // @route   GET api/seats/test
@@ -73,7 +76,7 @@ router.get("/:hall_id/rows/:row_id", getRowByIdController);
 
 // @route   DELETE api/seats/:hall_id/rows/:row_id
 // @desc    Delete row by id
-// @access  Privet
+// @access  Private
 router.delete(
   "/:hall_id/rows/:row_id",
   passport.authenticate("jwt", { session: false }),
@@ -82,10 +85,38 @@ router.delete(
 
 // @route   DELETE api/seats/:hall_id/rows
 // @desc    Delete row by id
-// @access  Privet
+// @access  Private
 router.delete(
   "/:hall_id/rows",
   passport.authenticate("jwt", { session: false }),
   deleteRowByIdController
 );
+
+// @route   POST api/seats/admin/:hall_id/:seat_id/reservation
+// @desc    Post reservation by seats id
+// @access  Private Admin
+router.post(
+  "/admin/:hall_id/:seat_id/reservation",
+  passport.authenticate("jwt", { session: false }),
+  putReservationBySeatIdControllerAdmin
+);
+
+// @route   GET api/seats/:hall_id/:seat_id/reservation
+// @desc    Get reservation by hall id
+// @access  Public
+router.get(
+  "/admin/:hall_id/:seat_id/reservation",
+  passport.authenticate("jwt", { session: false }),
+  getReservationBySeatIdController
+);
+
+// @route   POST api/seats/:hall_id/:seat_id/reservation
+// @desc    Post reservation by seats id
+// @access  Public
+router.post(
+  "/:hall_id/:seat_id/reservation",
+  passport.authenticate("jwt", { session: false }),
+  putReservationBySeatIdControllerAdmin
+);
+
 module.exports = router;

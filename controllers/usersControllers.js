@@ -105,7 +105,7 @@ exports.postUserLoginController = (req, res, next) => {
   });
 };
 
-exports.getCurrentUserController = (req, res, next) => {
+exports.getCurrentUserController = (req, res) => {
   res.json({
     id: req.user.id,
     name: req.user.name,
