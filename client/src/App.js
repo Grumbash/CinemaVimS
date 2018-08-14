@@ -12,6 +12,7 @@ import Footer from "./components/footers/Footer";
 import Landing from "./components/layout/Layout";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import Theaters from "./components/theaters/Theaters";
 
 import "./App.css";
 
@@ -47,6 +48,7 @@ class App extends Component {
             <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/theaters" component={Theaters} />
             </div>
             <Footer />
           </div>

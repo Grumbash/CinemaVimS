@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import ListItem from "./ListItemNavbar";
 
 class Navbar extends Component {
   onLogoutClick(e) {
@@ -11,6 +12,7 @@ class Navbar extends Component {
   }
 
   render() {
+    const links = ["cities", "theaters", "movies"];
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
@@ -66,12 +68,9 @@ class Navbar extends Component {
 
           <div className="collapse navbar-collapse" id="mobile-nav">
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to="/profiles">
-                  {" "}
-                  Users
-                </Link>
-              </li>
+              {links.map(link => (
+                <ListItem path={link} name={link} key={link} />
+              ))}
             </ul>
             {isAuthenticated ? authLinks : guestLinks}
           </div>
