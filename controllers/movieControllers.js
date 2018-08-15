@@ -18,10 +18,10 @@ exports.getMoviesController = (req, res) => {
   Movie.find().then(moviesArr => res.json(moviesArr));
 };
 
-exports.getMovieByTitleController = (req, res, next) => {
+exports.getMovieByIdController = (req, res, next) => {
   const errors = {};
 
-  Movie.findOne({ title: req.params.title })
+  Movie.findOne({ _id: req.params.id })
     .then(movie => {
       if (!movie) {
         errors.momovie = "Movie does not exist";

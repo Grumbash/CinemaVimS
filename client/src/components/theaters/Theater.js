@@ -1,5 +1,4 @@
 import React from "react";
-
 export default function Theater({ name, id, city }) {
   return (
     <div attr-id={id}>

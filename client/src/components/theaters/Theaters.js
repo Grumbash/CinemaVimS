@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getTheaters } from "../../actions/theatersAction";
+import getTheaters from "../../actions/theatersAction";
 import Theater from "./Theater";
 import Spinner from "../common/Spinner";
 
@@ -11,11 +11,10 @@ class Theaters extends Component {
   }
   render() {
     const {
-      theaters,
       theaters: { payload },
       theaters: { loading }
     } = this.props;
-    console.log(theaters);
+
     if (loading) {
       return (
         <div>

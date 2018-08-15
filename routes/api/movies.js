@@ -5,7 +5,7 @@ const passport = require("passport");
 // Load Controllers
 const {
   postMoviesController,
-  getMovieByTitleController,
+  getMovieByIdController,
   getMoviesController,
   deleteMovieByIdController
 } = require("../../controllers/movieControllers");
@@ -32,7 +32,7 @@ router.get("/", getMoviesController);
 // @route   GET api/movies/:title
 // @desc    Get movie for all users
 // @access  Public
-router.get("/:title", getMovieByTitleController);
+router.get("/:id", getMovieByIdController);
 
 // @route   DELETE api/movies/:id
 // @desc    Dlete movie through id

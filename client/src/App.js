@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import setAuthToken from "./utils/setAuthToken";
+import setAuthToken from "./utils/config/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 
 import { Provider } from "react-redux";
@@ -13,6 +13,8 @@ import Landing from "./components/layout/Layout";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Theaters from "./components/theaters/Theaters";
+import Movies from "./components/movies/Movies";
+import MovieContainer from "./components/movie/MovieContainer";
 
 import "./App.css";
 
@@ -49,6 +51,8 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/theaters" component={Theaters} />
+              <Route exact path="/movies" component={Movies} />
+              <Route exact path="/movies/:id" component={MovieContainer} />
             </div>
             <Footer />
           </div>
