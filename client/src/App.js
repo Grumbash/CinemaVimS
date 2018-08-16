@@ -15,6 +15,7 @@ import Login from "./components/auth/Login";
 import Theaters from "./components/theaters/Theaters";
 import Movies from "./components/movies/Movies";
 import MovieContainer from "./components/movie/MovieContainer";
+import ShowsContainer from "./components/shows/ShowsContainer";
 
 import "./App.css";
 
@@ -53,6 +54,7 @@ class App extends Component {
               <Route exact path="/theaters" component={Theaters} />
               <Route exact path="/movies" component={Movies} />
               <Route exact path="/movies/:id" component={MovieContainer} />
+              <Route exact path="/shows" component={ShowsContainer} />
             </div>
             <Footer />
           </div>

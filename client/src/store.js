@@ -12,5 +12,6 @@ const store = createStore(
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
+window.store = store.getState();
 
 export default store;

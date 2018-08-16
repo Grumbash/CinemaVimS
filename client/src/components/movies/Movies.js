@@ -1,16 +1,28 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import getMovies from "../../actions/moviesActions";
 import Movie from "./Movie";
 import Spinner from "../common/Spinner";
+import fetchItems from "../../hocs/fetchItems";
+import {
+  GET_MOVIES,
+  MOVIES_LOADING,
+  MOVIES_NOT_FOUND
+} from "../../actions/types";
+import api from "../../utils/apiMap";
 
 class Movies extends Component {
   componentDidMount() {
-    this.props.getMovies();
+    console.log(this.props);
+    this.props.getInfo(
+      GET_MOVIES,
+      MOVIES_LOADING,
+      MOVIES_NOT_FOUND,
+      api.movies
+    );
   }
+
   render() {
-    const { films, loading } = this.props.movies;
+    const { films, loading } = this.props.field;
 
     if (loading) {
       return (
@@ -35,16 +47,7 @@ class Movies extends Component {
 }
 
 Movies.propTypes = {
-  movies: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  state: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-  movies: state.movies,
-  errors: state.errors
-});
-
-export default connect(
-  mapStateToProps,
-  { getMovies }
-)(Movies);
+export default fetchItems(Movies, "movies");

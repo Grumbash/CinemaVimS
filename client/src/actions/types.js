@@ -5,9 +5,9 @@ export const GET_ERRORS = "GET_ERRORS";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
 // Theater
-// export const GET_THEATER = "GET_THEATER";
-// export const THEATER_LOADING = "THEATER_LOADING";
-// export const THEATER_NOT_FOUND = "THEATER_NOT_FOUND";
+export const GET_THEATER = "GET_THEATER";
+export const THEATER_LOADING = "THEATER_LOADING";
+export const THEATER_NOT_FOUND = "THEATER_NOT_FOUND";
 
 // Theater
 export const GET_THEATERS = "GET_THEATERS";
