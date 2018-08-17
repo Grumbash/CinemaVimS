@@ -5,6 +5,7 @@ import theatersReducer from "./theatersReducer";
 import moviesReducer from "./moviesReducer";
 import movieReducer from "./movieReducer";
 import showsReducer from "./showsReducer";
+import showReducer from "./showReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   theaters: theatersReducer,
   movies: moviesReducer,
   movie: movieReducer,
-  shows: showsReducer
+  shows: showsReducer,
+  rows: showReducer
 });

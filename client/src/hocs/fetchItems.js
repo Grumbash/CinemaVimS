@@ -19,6 +19,7 @@ export const fetchItems = (WrappedComponent, propName) => {
     render() {
       const props = { ...this.props };
       delete props.fullState;
+
       return (
         <WrappedComponent
           field={this.props.fullState[propName]}

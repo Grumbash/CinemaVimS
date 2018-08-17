@@ -8,12 +8,7 @@ const {
   getAllSeatsByHallIdController,
   getSeatByIdController,
   deleteSeatByIdController,
-  postRowsControllerAdmin,
-  getAllRowsController,
-  getRowByIdController,
-  deleteRowByIdController,
   putReservationBySeatIdControllerAdmin,
-  putReservationBySeatIdControllerUser,
   getReservationBySeatIdController
 } = require("../../controllers/seatsConntrollers");
 
