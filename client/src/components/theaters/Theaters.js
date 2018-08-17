@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import getTheaters from "../../actions/theatersAction";
 import Theater from "./Theater";
 import Spinner from "../common/Spinner";
+import fetchItems from "../../hocs/fetchItems";
+import getTheaters from "../../actions/theaters/getTheatersAction";
+import api from "../../utils/apiMap";
+import { compose } from "redux";
 
 class Theaters extends Component {
   componentDidMount() {
-    this.props.getTheaters();
+    compose(
+      this.props.fetchData,
+      getTheaters
+    )(api.theaters);
   }
   render() {
-    const {
-      theaters: { payload },
-      theaters: { loading }
-    } = this.props;
+    const { payload, loading } = this.props.field;
 
     if (loading) {
       return (
@@ -39,16 +41,9 @@ class Theaters extends Component {
 }
 
 Theaters.propTypes = {
-  theaters: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  field: PropTypes.object.isRequired,
+  fetchData: PropTypes.func.isRequired
 };
+const propFromRedux = "theaters";
 
-const mapStateToProps = state => ({
-  theaters: state.theaters,
-  errors: state.errors
-});
-
-export default connect(
-  mapStateToProps,
-  { getTheaters }
-)(Theaters);
+export default fetchItems(Theaters, propFromRedux);

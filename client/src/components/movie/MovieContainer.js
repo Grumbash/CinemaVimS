@@ -1,21 +1,22 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { getMovie } from "../../actions/movieActions";
-import { GET_MOVIE, MOVIE_LOADING, MOVIE_NOT_FOUND } from "../../actions/types";
+import getMovie from "../../actions/movie/getMovieActon";
 import Spinner from "../common/Spinner";
 import SingleMovie from "./SingleMovie";
+import fetchItems from "../../hocs/fetchItems";
+import api from "../../utils/apiMap";
+import { compose } from "redux";
 
 class MovieContainer extends Component {
   componentDidMount() {
-    const path = `/api/${this.props.match.url}`;
-    this.props.fetchMovie(
-      { GET: GET_MOVIE, LOADING: MOVIE_LOADING, NOT_FOUND: MOVIE_NOT_FOUND },
-      path
-    );
+    const path = `${api.movie}/${this.props.match.params.id}`;
+    compose(
+      this.props.fetchData,
+      getMovie
+    )(path);
   }
   render() {
-    const { payload, loading } = this.props.movie;
+    const { payload, loading } = this.props.field;
     if (loading) {
       return (
         <div>
@@ -32,25 +33,10 @@ class MovieContainer extends Component {
 }
 
 MovieContainer.propTypes = {
-  movie: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  field: PropTypes.object.isRequired,
+  fetchData: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  movie: state.movie,
-  errors: state.errors
-});
+const propFromRedux = "movie";
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchMovie: (mathods, path) => {
-      getMovie(mathods, path, dispatch);
-    }
-  };
-};
-
-// const fetchMovie
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MovieContainer);
+export default fetchItems(MovieContainer, propFromRedux);

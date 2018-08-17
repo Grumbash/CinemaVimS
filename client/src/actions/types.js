@@ -23,3 +23,8 @@ export const MOVIES_NOT_FOUND = "MOVIES_NOT_FOUND";
 export const GET_MOVIE = "GET_MOVIE";
 export const MOVIE_LOADING = "MOVIE_LOADING";
 export const MOVIE_NOT_FOUND = "MOVIE_NOT_FOUND";
+
+//Shows
+export const GET_SHOWS = "GET_SHOWS";
+export const SHOWS_LOADING = "SHOWS_LOADING";
+export const SHOWS_NOT_FOUND = "SHOWS_NOT_FOUND";

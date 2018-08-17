@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import getData from "../actions/fetchActionCombine";
 
 export const mapStateToProps = state => ({
   fullState: { ...state }
@@ -13,15 +12,18 @@ function getDisplayName(WrappedComponent) {
 
 export const fetchItems = (WrappedComponent, propName) => {
   class withData extends Component {
-    getInfoToDispatch = (get, load, not_found, path) => {
-      getData(get, load, not_found, path)(this.props.dispatch);
+    sendRequest = fetchData => {
+      fetchData(this.props.dispatch);
     };
 
     render() {
+      const props = { ...this.props };
+      delete props.fullState;
       return (
         <WrappedComponent
           field={this.props.fullState[propName]}
-          getInfo={this.getInfoToDispatch}
+          fetchData={this.sendRequest}
+          {...props}
         />
       );
     }

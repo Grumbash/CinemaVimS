@@ -1,5 +1,5 @@
 export default {
-  movie: "/api/movie",
+  movie: "/api/movies",
   movies: "/api/movies",
   theater: "/api/theater",
   theaters: "/api/theaters",

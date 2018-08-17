@@ -3,22 +3,16 @@ import PropTypes from "prop-types";
 import Movie from "./Movie";
 import Spinner from "../common/Spinner";
 import fetchItems from "../../hocs/fetchItems";
-import {
-  GET_MOVIES,
-  MOVIES_LOADING,
-  MOVIES_NOT_FOUND
-} from "../../actions/types";
+import getMovies from "../../actions/movies/getMoviesAction";
 import api from "../../utils/apiMap";
+import { compose } from "redux";
 
 class Movies extends Component {
   componentDidMount() {
-    console.log(this.props);
-    this.props.getInfo(
-      GET_MOVIES,
-      MOVIES_LOADING,
-      MOVIES_NOT_FOUND,
-      api.movies
-    );
+    compose(
+      this.props.fetchData,
+      getMovies
+    )(api.movies);
   }
 
   render() {
@@ -47,7 +41,8 @@ class Movies extends Component {
 }
 
 Movies.propTypes = {
-  state: PropTypes.object.isRequired
+  field: PropTypes.object.isRequired,
+  fetchData: PropTypes.func.isRequired
 };
-
-export default fetchItems(Movies, "movies");
+const propFromRedux = "movies";
+export default fetchItems(Movies, propFromRedux);
