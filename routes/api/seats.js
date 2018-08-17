@@ -50,48 +50,6 @@ router.delete(
   deleteSeatByIdController
 );
 
-// @route   POST api/seats/:hall_id/rows
-// @desc    Post rows
-// @access  Private Admin
-router.post(
-  "/:hall_id/rows",
-  passport.authenticate("jwt", { session: false }),
-  postRowsControllerAdmin
-);
-
-// @route   GET api/seats/:hall_id/rows
-// @desc    Get all rows in hall
-// @access  Public
-router.get("/:hall_id/rows", getAllRowsController);
-
-// @route   GET api/seats/:hall_id/rows/:row_id
-// @desc    Get all rows in hall
-// @access  Public
-router.get("/:hall_id/rows/:row_id", getRowByIdController);
-
-// @route   GET api/seats/:hall_id/rows/:row_id
-// @desc    Get row by id
-// @access  Public
-router.get("/:hall_id/rows/:row_id", getRowByIdController);
-
-// @route   DELETE api/seats/:hall_id/rows/:row_id
-// @desc    Delete row by id
-// @access  Private
-router.delete(
-  "/:hall_id/rows/:row_id",
-  passport.authenticate("jwt", { session: false }),
-  deleteRowByIdController
-);
-
-// @route   DELETE api/seats/:hall_id/rows
-// @desc    Delete row by id
-// @access  Private
-router.delete(
-  "/:hall_id/rows",
-  passport.authenticate("jwt", { session: false }),
-  deleteRowByIdController
-);
-
 // @route   POST api/seats/admin/:hall_id/:seat_id/reservation
 // @desc    Post reservation by seats id
 // @access  Private Admin
