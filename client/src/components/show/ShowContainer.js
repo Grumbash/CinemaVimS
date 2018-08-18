@@ -42,6 +42,6 @@ ShowContainer.propTypes = {
   fetchData: PropTypes.func.isRequired
 };
 
-const propFromRedux = "rows";
+const propFromRedux = "show";
 
 export default fetchItems(ShowContainer, propFromRedux);

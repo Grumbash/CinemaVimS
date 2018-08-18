@@ -14,5 +14,5 @@ export default combineReducers({
   movies: moviesReducer,
   movie: movieReducer,
   shows: showsReducer,
-  rows: showReducer
+  show: showReducer
 });
