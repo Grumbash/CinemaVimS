@@ -82,6 +82,13 @@ exports.postRowsControllerAdmin = (req, res, next) => {
 exports.getAllRowsController = (req, res, next) => {
   Row.find()
     .where({ hall: req.params.hall_id })
+    .populate({
+      path: "seats",
+      populate: {
+        path: "reservation",
+        populate: { path: "show", populate: { path: "movieId" } }
+      }
+    })
     .populate({ path: "hall", populate: { path: "theaterId" } })
     .then(rows => res.json(rows));
 };
