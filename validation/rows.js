@@ -10,9 +10,11 @@ module.exports = function validateRowsInputs(data) {
   data.hall = !isEmpty(data.hall) ? data.hall : "";
 
   if (data.seats) {
-    if (!Validator.isMongoId(data.seats)) {
-      errors.seats = mustBe("Seats field", "mongoDB ID format");
-    }
+    data.seats.forEach(seat => {
+      if (!Validator.isMongoId(seat)) {
+        errors.seats = mustBe("Seats field", "mongoDB ID format");
+      }
+    });
   }
 
   if (Validator.isEmpty(data.No)) {

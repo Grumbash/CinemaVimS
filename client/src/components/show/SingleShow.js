@@ -1,6 +1,4 @@
 import React from "react";
-// eslint-disable-next-line
-import moment from "moment";
 
 export default ({ show: { rows, hall_id } }) => {
   console.log(rows);
@@ -9,12 +7,12 @@ export default ({ show: { rows, hall_id } }) => {
       {rows.map(row => (
         <div
           style={{
-            width: "50px",
             height: "50px",
-            backgroundColor: "red",
+            backgroundColor: "beige",
             display: "inline-block"
           }}
           key={row._id}
+          className="col-10 center"
         >
           {row.No}
         </div>
