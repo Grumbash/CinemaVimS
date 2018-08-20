@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 // Import the seats model
 const Seats = require("../models/Seats");
 const Row = require("../models/Row");
@@ -122,7 +124,13 @@ exports.putReservationBySeatIdControllerAdmin = (req, res) => {
     return res.status(401).json("Insufficient rights");
   }
 
-  const fields = Object.assign({}, req.body);
+  const from = moment().toISOString();
+  const to = moment(from)
+    .add(15, "m")
+    .toISOString();
+  const from_to = { from, to };
+
+  const fields = Object.assign({}, from_to, req.body);
 
   const { errors, isValid } = validateReservationInputsAdmin(fields);
 
@@ -161,12 +169,17 @@ exports.putReservationBySeatIdControllerAdmin = (req, res) => {
   });
 };
 
-// Need test
 exports.putReservationBySeatIdControllerUser = (req, res) => {
-  const fields = Object.assign({}, req.body);
+  const from = moment().toISOString();
+  const to = moment(from)
+    .add(15, "m")
+    .toISOString();
+  const from_to = { from, to };
+
+  const fields = Object.assign({}, from_to, req.body);
 
   if (!fields.user) {
-    fields.user = req.user.id;
+    fields.user = req.user._id;
   }
 
   const { errors, isValid } = validateReservationInputs(fields);
@@ -206,4 +219,34 @@ exports.putReservationBySeatIdControllerUser = (req, res) => {
   });
 };
 
-exports.getReservationBySeatIdController = (req, res) => {};
+exports.getReservationByReservationIdController = (req, res) => {
+  Reservation.findById(req.params.reservation_id)
+    .populate({
+      path: "show",
+      populate: { path: "hallId", populate: { path: "theaterId" } }
+    })
+    .populate({ path: "show", populate: { path: "movieId" } })
+    .populate("user")
+    .then(reserv => res.json(reserv));
+};
+
+exports.deleteReservationByReservationIdController = (req, res) => {
+  if (!req.user.isAdmin) {
+    // Return 401 error
+    return res.status(401).json("Insufficient rights");
+  }
+  Reservation.findById(req.body.id).then(reservarion => {
+    if (
+      reservarion &&
+      (req.user.isAdmin || req.user.id === reservation.user._id)
+    ) {
+      Reservation.findByIdAndRemove(req.body.id).then(() =>
+        res.json({ success: true })
+      );
+    } else if (!(req.user.isAdmin || req.user.id === reservation.user._id)) {
+      return res.status(404).json({ error: "Insufficient rights" });
+    } else {
+      return res.status(404).json({ error: "Not founded to deletind" });
+    }
+  });
+};

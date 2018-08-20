@@ -9,22 +9,15 @@ const {
   getSeatByIdController,
   deleteSeatByIdController,
   putReservationBySeatIdControllerAdmin,
-  getReservationBySeatIdController
+  putReservationBySeatIdControllerUser,
+  getReservationByReservationIdController,
+  deleteReservationByReservationIdController
 } = require("../../controllers/seatsConntrollers");
 
 // @route   GET api/seats/test
 // @desc    Tests seats route
 // @access  Public
 router.get("/test", (req, res) => res.json({ msg: "Seats is Works" }));
-
-// @route   POST api/seats/:hall_id
-// @desc    Post seats on hall by hall_id(req.body.hall)
-// @access  Private Admin
-router.post(
-  "/:hall_id",
-  passport.authenticate("jwt", { session: false }),
-  postSeatsControllerAdmin
-);
 
 // @route   GET api/seats/:hall_id
 // @desc    Get all seats in hall
@@ -54,13 +47,22 @@ router.post(
   putReservationBySeatIdControllerAdmin
 );
 
-// @route   GET api/seats/:hall_id/:seat_id/reservation
+// @route   POST api/seats/:hall_id
+// @desc    Post seats on hall by hall_id(req.body.hall)
+// @access  Private Admin
+router.post(
+  "/:hall_id",
+  passport.authenticate("jwt", { session: false }),
+  postSeatsControllerAdmin
+);
+
+// @route   GET api/seats/:hall_id/:seat_id/reservation/:reservation_id
 // @desc    Get reservation by hall id
 // @access  Public
 router.get(
-  "/admin/:hall_id/:seat_id/reservation",
+  "/:hall_id/:seat_id/reservation/:reservation_id",
   passport.authenticate("jwt", { session: false }),
-  getReservationBySeatIdController
+  getReservationByReservationIdController
 );
 
 // @route   POST api/seats/:hall_id/:seat_id/reservation
@@ -69,7 +71,15 @@ router.get(
 router.post(
   "/:hall_id/:seat_id/reservation",
   passport.authenticate("jwt", { session: false }),
-  putReservationBySeatIdControllerAdmin
+  putReservationBySeatIdControllerUser
 );
 
+// @route   DELETE api/seats/:hall_id/:seat_id/reservation
+// @desc    Delete reservation by seats id
+// @access  Private
+router.delete(
+  "/:hall_id/:seat_id/reservation",
+  passport.authenticate("jwt", { session: false }),
+  deleteReservationByReservationIdController
+);
 module.exports = router;

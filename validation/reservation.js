@@ -8,7 +8,7 @@ module.exports = function validateReservationInputs(data) {
   data.from = !isEmpty(data.from) ? data.from : "";
   data.to = !isEmpty(data.to) ? data.to : "";
 
-  if (Validator.isEmpty(data.resrved)) {
+  if (Validator.isEmpty(data.reserved)) {
     errors.resrved = notEmpty("Resrved field");
   }
 

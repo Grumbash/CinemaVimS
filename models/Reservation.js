@@ -14,13 +14,12 @@ const ReservationSchema = new Schema({
   },
   reserved: {
     type: Boolean,
-    default: false
+    default: true
   },
   from: {
     type: Date
   },
   to: {
-    //Incriment Date + 15 min???
     type: Date
   },
   user: {

@@ -29,7 +29,8 @@ export const GET_SHOWS = "GET_SHOWS";
 export const SHOWS_LOADING = "SHOWS_LOADING";
 export const SHOWS_NOT_FOUND = "SHOWS_NOT_FOUND";
 
-//Shows
+//Show
 export const GET_SHOW = "GET_SHOW";
 export const SHOW_LOADING = "SHOW_LOADING";
 export const SHOW_NOT_FOUND = "SHOW_NOT_FOUND";
+export const SET_CURRENT_SHOW = "SET_CURRENT_SHOW";

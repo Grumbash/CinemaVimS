@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import getShow from "../../actions/show/getShowAction";
+import setCurrentShow from "../../actions/show/setCurrentShow";
 import Spinner from "../common/Spinner";
 import SingleShow from "./SingleShow";
 import fetchItems from "../../hocs/fetchItems";
@@ -12,6 +13,10 @@ class ShowContainer extends Component {
     super(props);
 
     this.hall_id = this.props.location.state.hall_id;
+    this.dispatch = this.props.dispatch;
+  }
+  componentWillMount() {
+    this.dispatch(setCurrentShow(this.props.match.params.id));
   }
   componentDidMount() {
     const path = `${api.rows}/${this.hall_id}/rows`;

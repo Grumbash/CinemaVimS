@@ -1,7 +1,8 @@
-import { GET_SHOW, SHOW_LOADING } from "../actions/types";
+import { GET_SHOW, SHOW_LOADING, SET_CURRENT_SHOW } from "../actions/types";
 const initialState = {
   loading: false,
-  rows: []
+  rows: [],
+  currentShow: ""
 };
 
 export default function(state = initialState, action) {
@@ -10,6 +11,8 @@ export default function(state = initialState, action) {
       return { ...state, loading: true };
     case GET_SHOW:
       return { ...state, rows: action.payload, loading: false };
+    case SET_CURRENT_SHOW:
+      return { ...state, currentShow: action.show };
     default:
       return state;
   }

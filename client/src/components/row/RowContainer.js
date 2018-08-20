@@ -4,7 +4,6 @@ import Seat from "../seat/SeatsContainer";
 export default class RowContainer extends Component {
   render() {
     const { row } = this.props;
-    console.log(row);
     return (
       <div className="mx-auto row">
         <div className="col-1">
@@ -17,7 +16,7 @@ export default class RowContainer extends Component {
           className="col-11 bg-light"
         >
           {row.seats.map(seat => (
-            <Seat key={seat._id} />
+            <Seat key={seat._id} {...seat} />
           ))}
         </div>
       </div>
