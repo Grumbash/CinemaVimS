@@ -6,7 +6,15 @@ data: {
 }
 */
 module.exports = post_UniversalForAdmin = (req, res, data) => {
-  const { errors, isValid } = data.validateFunc(req.body);
+  if (!(req.body instanceof Array)) {
+    postMany(req, res, data, [req.body]);
+  } else {
+    postMany(req, res, data, req.body);
+  }
+};
+
+function postMany(req, res, data, body) {
+  const { errors, isValid } = data.validateFunc(body);
 
   //Check Permission
   if (!req.user.isAdmin) {
@@ -20,22 +28,28 @@ module.exports = post_UniversalForAdmin = (req, res, data) => {
     return res.status(400).json(errors);
   }
 
-  const fields = Object.assign({}, req.body);
+  const fields = Object.assign({}, body);
 
-  if (fields.id) {
-    data.Model.findById(fields.id).then(elem => {
-      data.Model.findOneAndUpdate(
-        { _id: fields.id },
-        { $set: fields },
-        { new: true }
-      )
-        .then(elem => res.json(elem))
-        .catch(err => res.json(err, `Can't update`));
-    });
-  } else {
-    new data.Model(fields)
-      .save()
-      .then(elem => res.json(elem))
-      .catch(err => res.json(err));
-  }
-};
+  Promise.all(
+    body.map(elem => {
+      if (elem.id) {
+        let proms = data.Model.findById(elem.id).then(elemWrap => {
+          if (elemWrap) {
+            return data.Model.findOneAndUpdate(
+              { _id: elem.id },
+              { $set: elem },
+              { new: true }
+            );
+          } else {
+            return { status: 404, msg: `Item with id :${elem.id} not founded` };
+          }
+        });
+        return proms;
+      } else {
+        return new data.Model(elem).save();
+      }
+    })
+  )
+    .then(all => res.json(all))
+    .catch(err => res.json(err));
+}

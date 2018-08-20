@@ -9,29 +9,50 @@ module.exports = function validateRowsInputs(data) {
   data.No = !isEmpty(data.No) ? data.No : "";
   data.hall = !isEmpty(data.hall) ? data.hall : "";
 
-  if (data.seats) {
-    data.seats.forEach(seat => {
-      if (!Validator.isMongoId(seat)) {
-        errors.seats = mustBe("Seats field", "mongoDB ID format");
+  // if (data.seats) {
+  //   data.seats.forEach(seat => {
+  //     if (!Validator.isMongoId(seat)) {
+  //       errors.seats = mustBe("Seats field", "mongoDB ID format");
+  //     }
+  //   });
+  // }
+  console.log(data);
+  if (data instanceof Array) {
+    data.forEach(row => {
+      if (Validator.isEmpty(row.No)) {
+        errors.No = notEmpty("No");
+      }
+
+      if (row.No) {
+        if (!Validator.isInt(row.No.toString())) {
+          errors.No = mustBe("No", "integer");
+        }
+      }
+      if (Validator.isEmpty(row.hall)) {
+        errors.hall = notEmpty("Hall field");
+      }
+
+      if (!Validator.isMongoId(row.hall)) {
+        errors.hall = mustBe("Hall field", "mongoDB ID format");
       }
     });
-  }
-
-  if (Validator.isEmpty(data.No)) {
-    errors.No = notEmpty("No");
-  }
-
-  if (data.No) {
-    if (!Validator.isInt(data.No.toString())) {
-      errors.No = mustBe("No", "integer");
+  } else {
+    if (Validator.isEmpty(data.No)) {
+      errors.No = notEmpty("No");
     }
-  }
-  if (Validator.isEmpty(data.hall)) {
-    errors.hall = notEmpty("Hall field");
-  }
 
-  if (!Validator.isMongoId(data.hall)) {
-    errors.hall = mustBe("Hall field", "mongoDB ID format");
+    if (data.No) {
+      if (!Validator.isInt(data.No.toString())) {
+        errors.No = mustBe("No", "integer");
+      }
+    }
+    if (Validator.isEmpty(data.hall)) {
+      errors.hall = notEmpty("Hall field");
+    }
+
+    if (!Validator.isMongoId(data.hall)) {
+      errors.hall = mustBe("Hall field", "mongoDB ID format");
+    }
   }
 
   return {
