@@ -92,14 +92,16 @@ exports.getAllRowsController = (req, res, next) => {
       }
     })
     .populate({ path: "hall", populate: { path: "theaterId" } })
-    .then(rows => res.json(rows));
+    .then(rows => res.json(rows))
+    .catch(err => res.json(err));
 };
 
 exports.getRowByIdController = (req, res, next) => {
   Row.findById(req.params.row_id)
     .where({ hall: req.params.hall_id })
     .populate({ path: "hall", populate: { path: "theaterId" } })
-    .then(row => res.json(row));
+    .then(row => res.json(row))
+    .catch(err => res.json(err));
 };
 
 exports.deleteRowByIdController = (req, res, next) => {
@@ -107,15 +109,17 @@ exports.deleteRowByIdController = (req, res, next) => {
     // Return 401 error
     return res.status(401).json("Insufficient rights");
   }
-  Row.findById(req.body.id).then(row => {
-    if (row) {
-      Row.findByIdAndRemove(req.body.id).then(() =>
-        res.json({ success: true })
-      );
-    } else {
-      return res.status(404).json({ error: "Not founded to deletind" });
-    }
-  });
+  Row.findById(req.body.id)
+    .then(row => {
+      if (row) {
+        Row.findByIdAndRemove(req.body.id).then(() =>
+          res.json({ success: true })
+        );
+      } else {
+        return res.status(404).json({ error: "Not founded to deletind" });
+      }
+    })
+    .catch(err => res.json(err));
 };
 
 exports.putReservationBySeatIdControllerAdmin = (req, res) => {
@@ -142,7 +146,6 @@ exports.putReservationBySeatIdControllerAdmin = (req, res) => {
 
   Seats.findById(req.params.seat_id).then(seat => {
     if (!seat) {
-      console.log(req.params.seat_id);
       return res.status(404).json({ seat: "seat is not found" });
     }
 
@@ -163,7 +166,8 @@ exports.putReservationBySeatIdControllerAdmin = (req, res) => {
             });
             return elem;
           })
-          .then(elem => res.json(elem));
+          .then(elem => res.json(elem))
+          .catch(err => res.json(err));
       }
     });
   });
@@ -190,33 +194,40 @@ exports.putReservationBySeatIdControllerUser = (req, res) => {
     return res.status(400).json(errors);
   }
 
-  Seats.findById(req.params.seat_id).then(seat => {
-    if (!seat) {
-      return res.status(404).json({ seat: "seat is not found" });
-    }
-    Reservation.findById(fields.id).then(reserv => {
-      if (reserv) {
-        if (reserv.user.toString() !== req.user.id) {
-          return res.status(401).json({ notauthorized: "User not authorized" });
-        }
-        Reservation.findByIdAndUpdate(
-          { _id: fields.id },
-          { $set: fields },
-          { new: true }
-        );
-      } else {
-        new Reservation(fields)
-          .save()
-          .then(elem => {
-            Seats.findById(req.params.seat_id).then(seat =>
-              seat.reservation.push(elem._id)
-            );
-            return elem;
-          })
-          .then(elem => res.json(elem));
+  Seats.findById(req.params.seat_id)
+    .then(seat => {
+      if (!seat) {
+        return res.status(404).json({ seat: "seat is not found" });
       }
-    });
-  });
+      Reservation.findById(fields.id)
+        .then(reserv => {
+          if (reserv) {
+            if (reserv.user.toString() !== req.user.id) {
+              return res
+                .status(401)
+                .json({ notauthorized: "User not authorized" });
+            }
+            Reservation.findByIdAndUpdate(
+              { _id: fields.id },
+              { $set: fields },
+              { new: true }
+            );
+          } else {
+            new Reservation(fields)
+              .save()
+              .then(elem => {
+                Seats.findById(req.params.seat_id).then(seat =>
+                  seat.reservation.push(elem._id)
+                );
+                return elem;
+              })
+              .then(elem => res.json(elem))
+              .catch(err => res.json(err));
+          }
+        })
+        .catch(err => res.json(err));
+    })
+    .catch(err => res.json(err));
 };
 
 exports.getReservationByReservationIdController = (req, res) => {
@@ -227,7 +238,8 @@ exports.getReservationByReservationIdController = (req, res) => {
     })
     .populate({ path: "show", populate: { path: "movieId" } })
     .populate("user")
-    .then(reserv => res.json(reserv));
+    .then(reserv => res.json(reserv))
+    .catch(err => res.json(err));
 };
 
 exports.deleteReservationByReservationIdController = (req, res) => {
@@ -235,18 +247,20 @@ exports.deleteReservationByReservationIdController = (req, res) => {
     // Return 401 error
     return res.status(401).json("Insufficient rights");
   }
-  Reservation.findById(req.body.id).then(reservarion => {
-    if (
-      reservarion &&
-      (req.user.isAdmin || req.user.id === reservation.user._id)
-    ) {
-      Reservation.findByIdAndRemove(req.body.id).then(() =>
-        res.json({ success: true })
-      );
-    } else if (!(req.user.isAdmin || req.user.id === reservation.user._id)) {
-      return res.status(404).json({ error: "Insufficient rights" });
-    } else {
-      return res.status(404).json({ error: "Not founded to deletind" });
-    }
-  });
+  Reservation.findById(req.body.id)
+    .then(reservarion => {
+      if (
+        reservarion &&
+        (req.user.isAdmin || req.user.id === reservation.user._id)
+      ) {
+        Reservation.findByIdAndRemove(req.body.id).then(() =>
+          res.json({ success: true })
+        );
+      } else if (!(req.user.isAdmin || req.user.id === reservation.user._id)) {
+        return res.status(404).json({ error: "Insufficient rights" });
+      } else {
+        return res.status(404).json({ error: "Not founded to deletind" });
+      }
+    })
+    .catch(err => res.json(err));
 };

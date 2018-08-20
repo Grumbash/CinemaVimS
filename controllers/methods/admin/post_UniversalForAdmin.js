@@ -33,6 +33,9 @@ module.exports = post_UniversalForAdmin = (req, res, data) => {
         .catch(err => res.json(err, `Can't update`));
     });
   } else {
-    new data.Model(fields).save().then(elem => res.json(elem));
+    new data.Model(fields)
+      .save()
+      .then(elem => res.json(elem))
+      .catch(err => res.json(err));
   }
 };

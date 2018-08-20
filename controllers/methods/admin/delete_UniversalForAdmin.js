@@ -10,9 +10,9 @@ module.exports = DELETEa = (req, res, data) => {
     .where({ showId: req.params.show_id })
     .then(row => {
       if (row) {
-        data.Model.findByIdAndRemove(req.params.id).then(() =>
-          res.json({ success: true })
-        );
+        data.Model.findByIdAndRemove(req.params.id)
+          .then(() => res.json({ success: true }))
+          .catch(err => res.json(err));
       }
     });
 };

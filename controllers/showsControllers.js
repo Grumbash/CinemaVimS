@@ -16,25 +16,17 @@ exports.postShowController = (req, res) => {
 exports.getShowsController = (req, res) => {
   Show.find()
     .populate("movieId")
-    .populate({
-      path: "hallId",
-      populate: {
-        path: "theaterId"
-      }
-    })
-    .then(shows => res.json(shows));
+    .populate({ path: "hallId", populate: { path: "theaterId" } })
+    .then(shows => res.json(shows))
+    .catch(err => res.json(err));
 };
 
 exports.getShowByIdController = (req, res) => {
   Show.findById(req.params.id)
     .populate("movieId")
-    .populate({
-      path: "hallId",
-      populate: {
-        path: "theaterId"
-      }
-    })
-    .then(show => res.json(show));
+    .populate({ path: "hallId", populate: { path: "theaterId" } })
+    .then(show => res.json(show))
+    .catch(err => res.json(err));
 };
 
 exports.deleteShowByIdController = (req, res) => {
@@ -44,7 +36,7 @@ exports.deleteShowByIdController = (req, res) => {
     return res.status(401).json("Insufficient rights");
   }
 
-  Show.findByIdAndRemove(req.params.id).then(show =>
-    res.json({ success: true })
-  );
+  Show.findByIdAndRemove(req.params.id)
+    .then(show => res.json({ success: true }))
+    .catch(err => res.json(err));
 };

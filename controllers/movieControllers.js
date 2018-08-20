@@ -15,7 +15,9 @@ exports.postMoviesController = (req, res, next) => {
 };
 
 exports.getMoviesController = (req, res) => {
-  Movie.find().then(moviesArr => res.json(moviesArr));
+  Movie.find()
+    .then(moviesArr => res.json(moviesArr))
+    .catch(err => res.json(err));
 };
 
 exports.getMovieByIdController = (req, res, next) => {
@@ -36,12 +38,12 @@ exports.deleteMovieByIdController = (req, res) => {
   // Check Permission and return 401 error if isn't admin
   if (!req.user.isAdmin) return res.status(401).json("Insufficient rights");
 
-  Movie.findById({ _id: req.params.id }).then(movie => {
-    if (!movie) return res.json("Movie not found or already removed");
-    Movie.findByIdAndRemove({
-      _id: req.params.id
+  Movie.findById({ _id: req.params.id })
+    .then(movie => {
+      if (!movie) return res.json("Movie not found or already removed");
+      Movie.findByIdAndRemove({ _id: req.params.id })
+        .then(movie => res.json(movie))
+        .catch(err => res.json(err));
     })
-      .then(movie => res.json(movie))
-      .catch(err => res.json(err));
-  });
+    .catch(err => res.json(err));
 };

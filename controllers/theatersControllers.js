@@ -44,15 +44,16 @@ exports.deleteTheaterByIdConrtroller = (req, res, next) => {
     // Return 401 error
     return res.status(401).json("Insufficient rights");
   }
-  Theater.findById({ _id: req.params.id }).then(theater => {
-    if (!theater) return res.json("Theater not found or already removed");
-    Theater.findByIdAndRemove({
-      _id: req.params.id
+  Theater.findById({ _id: req.params.id })
+    .then(theater => {
+      if (!theater) return res.json("Theater not found or already removed");
+      Theater.findByIdAndRemove({ _id: req.params.id })
+        .then(theater => res.json(theater))
+        .catch(err => res.json(err));
     })
-      .then(theater => res.json(theater))
-      .catch(err => res.json(err));
-  });
+    .catch(err => res.json(err));
 };
+
 exports.postHallConrtroller = (req, res, next) => {
   const { errors, isValid } = validateHallInputs(req.body);
 
@@ -87,7 +88,10 @@ exports.postHallConrtroller = (req, res, next) => {
       // Create
 
       // Save hall profile
-      new Hall(fields).save().then(hall => res.json(hall));
+      new Hall(fields)
+        .save()
+        .then(hall => res.json(hall))
+        .catch(err => res.json(err));
     }
   });
 };
@@ -95,12 +99,14 @@ exports.getHallsConrtroller = (req, res) => {
   Hall.find()
     .where({ theaterId: req.params.id })
     .populate("theaterId")
-    .then(halls => res.json(halls));
+    .then(halls => res.json(halls))
+    .catch(err => res.json(err));
 };
 exports.getHallByIdConrtroller = (req, res) => {
   Hall.findById(req.params.hall_id)
     .populate("theaterId")
-    .then(hall => res.json(hall));
+    .then(hall => res.json(hall))
+    .catch(err => res.json(err));
 };
 
 exports.deleteHallByIdConrtroller = (req, res) => {
@@ -109,5 +115,7 @@ exports.deleteHallByIdConrtroller = (req, res) => {
     // Return 401 error
     return res.status(401).json("Insufficient rights");
   }
-  Hall.findByIdAndRemove(req.params.hall_id).then(hall => res.json(hall));
+  Hall.findByIdAndRemove(req.params.hall_id)
+    .then(hall => res.json(hall))
+    .catch(err => res.json(err));
 };
