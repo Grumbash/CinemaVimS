@@ -16,10 +16,9 @@ module.exports = function validateRowsInputs(data) {
   //     }
   //   });
   // }
-  console.log(data);
   if (data instanceof Array) {
     data.forEach(row => {
-      if (Validator.isEmpty(row.No)) {
+      if (Validator.isEmpty(row.No.toString())) {
         errors.No = notEmpty("No");
       }
 
@@ -37,7 +36,7 @@ module.exports = function validateRowsInputs(data) {
       }
     });
   } else {
-    if (Validator.isEmpty(data.No)) {
+    if (Validator.isEmpty(data.No.toString())) {
       errors.No = notEmpty("No");
     }
 

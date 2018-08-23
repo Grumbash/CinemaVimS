@@ -16,11 +16,10 @@ const validateReservationInputsAdmin = require("../validation/reservation-admin"
 // Combain function
 const post_UniversalForAdmin = require("./methods/admin/post_UniversalForAdmin");
 
-exports.postSeatsControllerAdmin = (req, res, next) => {
+exports.postSeatsControllerAdmin = (req, res) => {
   post_UniversalForAdmin(req, res, {
     Model: Seats,
-    validateFunc: validateSeatsInputs,
-    check: req.body.No
+    validateFunc: validateSeatsInputs
   });
 };
 
@@ -73,12 +72,93 @@ exports.deleteSeatByIdController = (req, res, next) => {
   });
 };
 
-exports.postRowsControllerAdmin = (req, res, next) => {
-  post_UniversalForAdmin(req, res, {
-    Model: Row,
-    validateFunc: validateRowsInputs,
-    check: req.body.No
-  });
+exports.postRowsControllerAdmin = (req, res) => {
+  const { body } = req;
+  const { errors, isValid } = validateRowsInputs(body);
+  //Check Permission
+  if (!req.user.isAdmin) {
+    // Return 401 error
+    return res.status(401).json("Insufficient rights");
+  }
+
+  // Check Validation
+  if (!isValid) {
+    // Return any errors with 400 status
+    return res.status(400).json(errors);
+  }
+
+  const fields = Object.assign({}, body);
+
+  Promise.all(
+    body.map(rowNow => {
+      if (rowNow.hasOwnProperty("id")) {
+        let proms = Row.findById(rowNow.id).then(elemWrap => {
+          if (elemWrap) {
+            rowNow.seats = rowNow.seats.map(seat => seat.id);
+            return Row.findOneAndUpdate(
+              { _id: rowNow.id },
+              { $set: rowNow },
+              { new: true }
+            );
+          } else {
+            return {
+              status: 404,
+              msg: `Item with id :${rowNow.id} not founded`
+            };
+          }
+        });
+        return proms;
+      } else {
+        const seats = rowNow.seats.map(seat => {
+          if (seat.hasOwnProperty("id")) {
+            let proms = Seats.findById(seat.id).then(elemWrap => {
+              if (elemWrap) {
+                return Seats.findOneAndUpdate(
+                  { _id: seat.id },
+                  { $set: seat },
+                  { new: true }
+                ).then(seat => seat.id);
+              } else {
+                return {
+                  status: 404,
+                  msg: `Item with id :${seat.id} not founded`
+                };
+              }
+            });
+            return proms;
+          } else {
+            return new Seats(seat)
+              .save()
+              .then(seat => seat.id)
+              .catch(err => err);
+          }
+        });
+        return Promise.all(seats).then(seatsIds => {
+          rowNow.seats = seatsIds;
+          return new Row(rowNow).save();
+        });
+      }
+    })
+  )
+    .then(all => {
+      Promise.all(
+        all.map(row => {
+          return Row.findById(row.id)
+            .where({ hall: row.hall })
+            .populate({
+              path: "seats",
+              populate: {
+                path: "reservation",
+                populate: { path: "show", populate: { path: "movieId" } }
+              }
+            })
+            .populate({ path: "hall", populate: { path: "theaterId" } });
+        })
+      )
+        .then(rows => res.json(rows))
+        .catch(err => res.json(err));
+    })
+    .catch(err => res.json(err));
 };
 
 exports.getAllRowsController = (req, res, next) => {

@@ -9,49 +9,35 @@ const {
   deleteRowByIdController
 } = require("../../controllers/seatsConntrollers");
 
-// @route   GET api/seats/test
+// @route   GET api/rows/test
 // @desc    Tests seats route
 // @access  Public
 router.get("/test", (req, res) => res.json({ msg: "Seats is Works" }));
 
-// @route   POST api/seats/:hall_id/rows
+// @route   POST api/rows/:hall_id
 // @desc    Post rows
 // @access  Private Admin
 router.post(
-  "/:hall_id/rows",
+  "/:hall_id",
   passport.authenticate("jwt", { session: false }),
   postRowsControllerAdmin
 );
 
-// @route   GET api/seats/:hall_id/rows
+// @route   GET api/rows/:hall_id/rows
 // @desc    Get all rows in hall
 // @access  Public
-router.get("/:hall_id/rows", getAllRowsController);
+router.get("/:hall_id", getAllRowsController);
 
-// @route   GET api/seats/:hall_id/rows/:row_id
+// @route   GET api/rows/:hall_id/:row_id
 // @desc    Get all rows in hall
 // @access  Public
-router.get("/:hall_id/rows/:row_id", getRowByIdController);
+router.get("/:hall_id/:row_id", getRowByIdController);
 
-// @route   GET api/seats/:hall_id/rows/:row_id
-// @desc    Get row by id
-// @access  Public
-router.get("/:hall_id/rows/:row_id", getRowByIdController);
-
-// @route   DELETE api/seats/:hall_id/rows/:row_id
+// @route   DELETE api/rows/:hall_id/:row_id
 // @desc    Delete row by id
 // @access  Private
 router.delete(
-  "/:hall_id/rows/:row_id",
-  passport.authenticate("jwt", { session: false }),
-  deleteRowByIdController
-);
-
-// @route   DELETE api/seats/:hall_id/rows
-// @desc    Delete row by id
-// @access  Private
-router.delete(
-  "/:hall_id/rows",
+  "/:hall_id/:row_id",
   passport.authenticate("jwt", { session: false }),
   deleteRowByIdController
 );
