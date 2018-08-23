@@ -12,6 +12,9 @@ class SeatsContainer extends Component {
     return (
       <div>
         <button
+          onClick={() => {
+            console.log("Get Reservation on " + this.props._id);
+          }}
           className={classnames("seat btn ", {
             "btn-dark": reserv,
             "btn-light": !reserv

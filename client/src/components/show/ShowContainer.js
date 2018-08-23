@@ -19,7 +19,7 @@ class ShowContainer extends Component {
     this.dispatch(setCurrentShow(this.props.match.params.id));
   }
   componentDidMount() {
-    const path = `${api.rows}/${this.hall_id}/rows`;
+    const path = `${api.rows}/${this.hall_id}`;
     compose(
       this.props.fetchData,
       getShow
