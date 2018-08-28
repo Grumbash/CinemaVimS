@@ -1,7 +1,7 @@
 export default {
   movie: "/api/movies",
   movies: "/api/movies",
-  theater: "/api/theater",
+  theater: "/api/theaters",
   theaters: "/api/theaters",
   shows: "/api/shows",
   rows: "/api/rows",

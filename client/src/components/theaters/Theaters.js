@@ -6,6 +6,7 @@ import fetchItems from "../../hocs/fetchItems";
 import getTheaters from "../../actions/theaters/getTheatersAction";
 import api from "../../utils/apiMap";
 import { compose } from "redux";
+import ModalContainer from "../modal/ModalContainer";
 
 class Theaters extends Component {
   componentDidMount() {
@@ -15,7 +16,10 @@ class Theaters extends Component {
     )(api.theaters);
   }
   render() {
-    const { payload, loading } = this.props.field;
+    const {
+      field: { payload, loading },
+      user
+    } = this.props;
 
     if (loading) {
       return (
@@ -26,12 +30,23 @@ class Theaters extends Component {
     } else {
       return (
         <div>
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={this.props.openModal}
+          >
+            <i className="fa fa-plus" /> <span>Add theater</span>
+          </button>
+          {this.props.modal.isOpen && (
+            <ModalContainer path={this.props.location.pathname} />
+          )}
           {payload.map(theater => (
             <Theater
               key={theater._id}
               name={theater.name}
               city={theater.city}
               id={theater._id}
+              user={user}
             />
           ))}
         </div>

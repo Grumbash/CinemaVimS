@@ -1,9 +1,17 @@
 import React from "react";
-export default function Theater({ name, id, city }) {
+import { Link } from "react-router-dom";
+export default function Theater({ name, id, city, user }) {
   return (
-    <div attr-id={id}>
-      <h2>Name: {name}</h2>
-      <div>City: {city}</div>
-    </div>
+    <Link to={{ pathname: `/theaters/${id}` }}>
+      <div attr-id={id}>
+        <h2>Name: {name}</h2>
+        <div>City: {city}</div>
+        {user.isAdmin ? (
+          <button onClick={() => console.log("Change")}>Change data</button>
+        ) : (
+          ""
+        )}
+      </div>
+    </Link>
   );
 }

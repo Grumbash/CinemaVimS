@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import getShow from "../../actions/show/getShowAction";
-import setCurrentShow from "../../actions/show/setCurrentShow";
+import setCurrentShow from "../../actions/show/setCurrentShowAction";
 import Spinner from "../common/Spinner";
 import SingleShow from "./SingleShow";
 import fetchItems from "../../hocs/fetchItems";

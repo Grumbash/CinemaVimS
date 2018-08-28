@@ -6,10 +6,12 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
 // Theater
 export const GET_THEATER = "GET_THEATER";
+export const POST_THEATER = "POST_THEATER";
 export const THEATER_LOADING = "THEATER_LOADING";
 export const THEATER_NOT_FOUND = "THEATER_NOT_FOUND";
+export const SET_CURRENT_THEATER = "SET_CURRENT_THEATER";
 
-// Theater
+// Theaters
 export const GET_THEATERS = "GET_THEATERS";
 export const THEATERS_LOADING = "THEATERS_LOADING";
 export const THEATERS_NOT_FOUND = "THEATERS_NOT_FOUND";
@@ -34,3 +36,7 @@ export const GET_SHOW = "GET_SHOW";
 export const SHOW_LOADING = "SHOW_LOADING";
 export const SHOW_NOT_FOUND = "SHOW_NOT_FOUND";
 export const SET_CURRENT_SHOW = "SET_CURRENT_SHOW";
+
+// Modal
+
+export const IS_MODAL_OPEN = "IS_MODAL_OPEN";

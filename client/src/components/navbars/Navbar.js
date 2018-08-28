@@ -12,7 +12,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const links = ["cities", "theaters", "movies", "shows"];
+    const links = ["theaters", "movies", "shows"];
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (

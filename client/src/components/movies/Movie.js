@@ -5,7 +5,7 @@ export default function Movie({ title, id, duration }) {
   return (
     <Link to={{ pathname: `/movies/${id}`, state: { id: id } }}>
       <div attr-id={id}>
-        <h2>Name: {title}</h2>
+        <h2>Title: {title}</h2>
         <div>
           Duration:{" "}
           {moment()

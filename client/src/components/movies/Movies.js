@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Movie from "./Movie";
 import Spinner from "../common/Spinner";
+import ModalContainer from "../modal/ModalContainer";
 import fetchItems from "../../hocs/fetchItems";
 import getMovies from "../../actions/movies/getMoviesAction";
 import api from "../../utils/apiMap";
@@ -16,7 +17,7 @@ class Movies extends Component {
   }
 
   render() {
-    const { films, loading } = this.props.field;
+    const { payload, loading } = this.props.field;
 
     if (loading) {
       return (
@@ -27,7 +28,17 @@ class Movies extends Component {
     }
     return (
       <div>
-        {films.map(movie => (
+        <button
+          type="button"
+          className="btn btn-success"
+          onClick={this.props.openModal}
+        >
+          <i className="fa fa-plus" /> <span>Add movie</span>
+        </button>
+        {this.props.modal.isOpen && (
+          <ModalContainer path={this.props.location.pathname} />
+        )}
+        {payload.map(movie => (
           <Movie
             key={movie._id}
             title={movie.title}

@@ -2,15 +2,15 @@ import { GET_THEATER, THEATER_LOADING, THEATER_NOT_FOUND } from "../types";
 import axios from "axios";
 
 function getTheater(payload) {
-  return { type: GET_THEATER, payload, loading: false };
+  return { type: GET_THEATER, payload };
 }
 
 function errorTheater(err) {
-  return { type: THEATER_NOT_FOUND, err, loading: false };
+  return { type: THEATER_NOT_FOUND, err };
 }
 
 function loading() {
-  return { type: THEATER_LOADING, loading: true };
+  return { type: THEATER_LOADING };
 }
 
 export default path => dispatch => {

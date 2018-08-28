@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Show from "./Show";
 import Spinner from "../common/Spinner";
+import ModalContainer from "../modal/ModalContainer";
 import fetchItems from "../../hocs/fetchItems";
 import getShows from "../../actions/shows/getShowsAction";
 import api from "../../utils/apiMap";
@@ -15,7 +16,7 @@ class Shows extends Component {
     )(api.shows);
   }
   render() {
-    const { shows, loading } = this.props.field;
+    const { payload, loading } = this.props.field;
 
     if (loading) {
       return (
@@ -26,7 +27,17 @@ class Shows extends Component {
     } else {
       return (
         <div>
-          {shows.map(show => (
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={this.props.openModal}
+          >
+            <i className="fa fa-plus" /> <span>Add show</span>
+          </button>
+          {this.props.modal.isOpen && (
+            <ModalContainer path={this.props.location.pathname} />
+          )}
+          {payload.map(show => (
             <Show key={show._id} {...show} />
           ))}
         </div>

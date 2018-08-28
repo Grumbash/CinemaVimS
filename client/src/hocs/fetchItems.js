@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import toggleModal from "../actions/modals/isOpenAction";
 
 export const mapStateToProps = state => ({
   fullState: { ...state }
@@ -16,6 +17,11 @@ export const fetchItems = (WrappedComponent, propName) => {
       fetchData(this.props.dispatch);
     };
 
+    openModal = e => {
+      e.preventDefault();
+      this.props.dispatch(toggleModal(true));
+    };
+
     render() {
       const props = { ...this.props };
       delete props.fullState;
@@ -23,7 +29,10 @@ export const fetchItems = (WrappedComponent, propName) => {
       return (
         <WrappedComponent
           field={this.props.fullState[propName]}
+          user={this.props.fullState.auth.user}
           fetchData={this.sendRequest}
+          modal={this.props.fullState.modals}
+          openModal={this.openModal}
           {...props}
         />
       );
