@@ -27,13 +27,15 @@ class Shows extends Component {
     } else {
       return (
         <div>
-          <button
-            type="button"
-            className="btn btn-success"
-            onClick={this.props.openModal}
-          >
-            <i className="fa fa-plus" /> <span>Add show</span>
-          </button>
+          {this.props.user.isAdmin && (
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={this.props.openModal}
+            >
+              <i className="fa fa-plus" /> <span>Add show</span>
+            </button>
+          )}
           {this.props.modal.isOpen && (
             <ModalContainer path={this.props.location.pathname} />
           )}

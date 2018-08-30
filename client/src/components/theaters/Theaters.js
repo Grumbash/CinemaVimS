@@ -18,7 +18,8 @@ class Theaters extends Component {
   render() {
     const {
       field: { payload, loading },
-      user
+      user,
+      location: { pathname }
     } = this.props;
 
     if (loading) {
@@ -30,16 +31,16 @@ class Theaters extends Component {
     } else {
       return (
         <div>
-          <button
-            type="button"
-            className="btn btn-success"
-            onClick={this.props.openModal}
-          >
-            <i className="fa fa-plus" /> <span>Add theater</span>
-          </button>
-          {this.props.modal.isOpen && (
-            <ModalContainer path={this.props.location.pathname} />
+          {this.props.user.isAdmin && (
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={this.props.openModal}
+            >
+              <i className="fa fa-plus" /> <span>Add theater</span>
+            </button>
           )}
+          {this.props.modal.isOpen && <ModalContainer path={pathname} />}
           {payload.map(theater => (
             <Theater
               key={theater._id}

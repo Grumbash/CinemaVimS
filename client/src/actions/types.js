@@ -38,5 +38,13 @@ export const SHOW_NOT_FOUND = "SHOW_NOT_FOUND";
 export const SET_CURRENT_SHOW = "SET_CURRENT_SHOW";
 
 // Modal
-
 export const IS_MODAL_OPEN = "IS_MODAL_OPEN";
+export const OPEN_DELETE_MODAL = "OPEN_DELETE_MODAL";
+export const CLOSE_DELETE_MODAL = "CLOSE_DELETE_MODAL";
+
+// Delete Success
+export const DELETING_IS_SUCCESS = "DELETING_IS_SUCCESS";
+
+// Post reservation
+export const TICKET_IS_POSTING = "TICKET_IS_POSTING";
+export const REVSERVATION_NOT_FOUNDED = "REVSERVATION_NOT_FOUNDED";

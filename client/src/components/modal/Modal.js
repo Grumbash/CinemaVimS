@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import TextFieldGroup from "../common/TextFieldGroup";
 import "./modal.css";
 
 export default class Modal extends Component {
@@ -9,11 +10,21 @@ export default class Modal extends Component {
       this.props.path.slice(1, 2).toUpperCase() +
       this.props.path.slice(2, this.props.path.length - 1);
 
-    this.textInput = React.createRef();
+    const arrayToObject = array =>
+      array.reduce((obj, item) => {
+        obj[item] = "";
+        return obj;
+      }, {});
+
+    this.state = arrayToObject(this.props.inputFields);
   }
 
-  getInputsValues = () => {
-    console.log(this.textInput.current.value);
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  getInputsValues = e => {
+    this.props.postData(`/api${this.props.path}`, this.state);
   };
 
   render() {
@@ -33,15 +44,14 @@ export default class Modal extends Component {
             </button>
           </div>
           <div className="modal-body">
-            <form className="container">
-              {this.props.inputFields.map((fieldName, idx) => (
-                <input
-                  type="text"
-                  name={fieldName}
-                  placeholder={fieldName}
-                  className="col"
+            <form className="container" onSubmit={this.getInputsValues}>
+              {this.props.inputFields.map((name, idx) => (
+                <TextFieldGroup
+                  name={name}
+                  placeholder={name}
                   key={idx}
-                  ref={this.textInput}
+                  value={this.state[name]}
+                  onChange={this.onChange}
                 />
               ))}
             </form>
@@ -56,7 +66,7 @@ export default class Modal extends Component {
             </button>
             <button
               type="button"
-              className="btn btn-primary" // onClick={this.props.postData(`/api/${this.props.path}`, )}
+              className="btn btn-primary"
               onClick={this.getInputsValues}
             >
               Save changes

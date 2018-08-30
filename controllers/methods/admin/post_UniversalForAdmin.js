@@ -14,6 +14,7 @@ module.exports = post_UniversalForAdmin = (req, res, data) => {
 };
 
 function postOne(req, res, data) {
+  const { body } = req;
   const { errors, isValid } = data.validateFunc(body);
 
   //Check Permission
@@ -31,11 +32,11 @@ function postOne(req, res, data) {
   const fields = Object.assign({}, body);
 
   if (fields.id) {
-    let proms = data.Model.findById(elem.id).then(elemWrap => {
+    let proms = data.Model.findById(fields.id).then(elemWrap => {
       if (elemWrap) {
         return data.Model.findOneAndUpdate(
-          { _id: elem.id },
-          { $set: elem },
+          { _id: fields.id },
+          { $set: fields },
           { new: true }
         )
           .then(all => res.json(all))
@@ -43,15 +44,14 @@ function postOne(req, res, data) {
       } else {
         return res
           .status(404)
-          .json({
-            msg: `Item with id :${elem.id} not founded`
-          })
+          .json({ msg: `Item with id :${fields.id} not founded` })
           .catch(err => res.json(err));
       }
     });
     return proms;
   } else {
-    return new data.Model(elem)
+    console.log();
+    return new data.Model(fields)
       .save()
       .then(all => res.json(all))
       .catch(err => res.json(err));

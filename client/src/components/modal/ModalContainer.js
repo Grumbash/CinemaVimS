@@ -21,6 +21,7 @@ class ModalContainer extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div>
         <Modal
@@ -28,6 +29,7 @@ class ModalContainer extends Component {
           closeModal={this.props.closeModal}
           postData={this.props.postData}
           inputFields={this.propToModalView}
+          modal={this.props.state.modals}
         />
       </div>
     );

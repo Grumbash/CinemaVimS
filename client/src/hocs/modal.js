@@ -15,9 +15,9 @@ function getDisplayName(WrappedComponent) {
 
 export const modal = (WrappedComponent, propName) => {
   class modal extends Component {
-    sendRequest(path, payload) {
+    sendRequest = (path, payload) => {
       postTheaterAction(path)(payload)(this.props.dispatch);
-    }
+    };
 
     closeModal = e => {
       e.preventDefault();

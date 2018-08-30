@@ -1,23 +1,38 @@
 import React, { Component } from "react";
+import postReservation from "../../actions/reservation/postReservation";
 import { connect } from "react-redux";
 import classnames from "classnames";
+import api from "../../utils/apiMap";
 import "./seats.css";
 
 class SeatsContainer extends Component {
-  render() {
-    console.log(this.props);
-    const reserv = this.props.reservation.some(
+  constructor(props) {
+    super(props);
+
+    this.reserv = this.props.reservation.filter(
       reserv => reserv.show._id === this.props.currentShow
-    );
+    )[0];
+    this.path = `${api.seats}/${this.reserv.show.hallId}/${
+      this.props._id
+    }/reservation`;
+  }
+  getTicket = e => {
+    console.log(this.reserv);
+    postReservation(this.path)({
+      ...this.reserv,
+      reserved: !this.reserv.reserved,
+      show: this.reserv.show._id,
+      user: this.props.userId
+    })(this.props.dispatch);
+  };
+  render() {
     return (
       <div>
         <button
-          onClick={() => {
-            console.log("Get Reservation on " + this.props._id);
-          }}
+          onClick={this.getTicket}
           className={classnames("seat btn ", {
-            "btn-dark": reserv,
-            "btn-light": !reserv
+            "btn-dark": this.reserv.reserved,
+            "btn-light": !this.reserv.reserved
           })}
         >
           {this.props.No}

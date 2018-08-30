@@ -235,7 +235,9 @@ exports.putReservationBySeatIdControllerAdmin = (req, res) => {
           { _id: fields.id },
           { $set: fields },
           { new: true }
-        );
+        )
+          .then(newReserv => res.json(newReserv))
+          .catch(err => res.json(err));
       } else {
         new Reservation(fields)
           .save()
@@ -279,19 +281,23 @@ exports.putReservationBySeatIdControllerUser = (req, res) => {
       if (!seat) {
         return res.status(404).json({ seat: "seat is not found" });
       }
-      Reservation.findById(fields.id)
+      Reservation.findById(fields._id)
         .then(reserv => {
           if (reserv) {
-            if (reserv.user.toString() !== req.user.id) {
+            if (fields.user.toString() !== req.user.id) {
               return res
                 .status(401)
                 .json({ notauthorized: "User not authorized" });
             }
             Reservation.findByIdAndUpdate(
-              { _id: fields.id },
+              { _id: fields._id },
               { $set: fields },
               { new: true }
-            );
+            )
+              .then(reservation => {
+                res.json(reservation);
+              })
+              .catch(err => res.json(err));
           } else {
             new Reservation(fields)
               .save()

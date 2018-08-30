@@ -6,11 +6,14 @@ import fetchItems from "../../hocs/fetchItems";
 import setCurrentTheater from "../../actions/theater/setCurrentTheaterAction";
 import getTheater from "../../actions/theater/getTheaterAction";
 import api from "../../utils/apiMap";
+import DeleteButton from "../common/DeleteButton";
+import DeleteModal from "../deleteModal/DeleteModal";
 import { compose } from "redux";
 
 class TheaterContainer extends Component {
   constructor(props) {
     super(props);
+    this.path = `${api.theater}/${this.props.match.params.id}`;
 
     this.dispatch = this.props.dispatch;
   }
@@ -18,22 +21,38 @@ class TheaterContainer extends Component {
     this.dispatch(setCurrentTheater(this.props.match.params.id));
   }
   componentDidMount() {
-    const path = `${api.theater}/${this.props.match.params.id}`;
     compose(
       this.props.fetchData,
       getTheater
-    )(path);
+    )(this.path);
   }
   render() {
     const { theater, loading } = this.props.field;
+    const { user, modal } = this.props;
+    console.log(this.props);
     if (loading) {
       return (
         <div>
           <Spinner />
         </div>
       );
+    } else {
+      return (
+        <div className="row">
+          <SingleTheater {...theater} />
+          {user.isAdmin &&
+            modal.isDeleteOpen && (
+              <DeleteModal
+                path={this.path}
+                purposeOfRemoval={theater}
+                goBack={this.props.history.push}
+                pathToBack={this.props.location.state.path}
+              />
+            )}
+          {user.isAdmin && <DeleteButton />}
+        </div>
+      );
     }
-    return <div>{<SingleTheater {...theater} />}</div>;
   }
 }
 

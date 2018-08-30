@@ -1,5 +1,4 @@
 import { GET_THEATERS, THEATERS_LOADING, THEATERS_NOT_FOUND } from "../types";
-// import fetchItems from "./fetchActionCombineTest";
 import axios from "axios";
 
 function getTheaters(payload) {
