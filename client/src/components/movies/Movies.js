@@ -7,6 +7,7 @@ import fetchItems from "../../hocs/fetchItems";
 import getMovies from "../../actions/movies/getMoviesAction";
 import api from "../../utils/apiMap";
 import { compose } from "redux";
+import OpenModalButton from "../common/OpenModalButton";
 
 class Movies extends Component {
   componentDidMount() {
@@ -28,17 +29,12 @@ class Movies extends Component {
     }
     return (
       <div>
-        {this.props.user.isAdmin && (
-          <button
-            type="button"
-            className="btn btn-success"
-            onClick={this.props.openModal}
-          >
-            <i className="fa fa-plus" /> <span>Add movie</span>
-          </button>
-        )}
+        <OpenModalButton text="movie" />
         {this.props.modal.isOpen && (
-          <ModalContainer path={this.props.location.pathname} />
+          <ModalContainer
+            path={this.props.location.pathname}
+            current="movies"
+          />
         )}
         {payload.map(movie => (
           <Movie

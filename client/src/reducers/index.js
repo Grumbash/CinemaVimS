@@ -8,6 +8,8 @@ import movieReducer from "./movieReducer";
 import showsReducer from "./showsReducer";
 import showReducer from "./showReducer";
 import modalsReducer from "./modalsReducer";
+import hallsReducer from "./hallsReducer";
+import hallReducer from "./hallReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -18,5 +20,7 @@ export default combineReducers({
   movie: movieReducer,
   shows: showsReducer,
   show: showReducer,
-  modals: modalsReducer
+  modals: modalsReducer,
+  halls: hallsReducer,
+  hall: hallReducer
 });

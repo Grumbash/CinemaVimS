@@ -9,6 +9,7 @@ const movie = require("./routes/api/movies");
 const show = require("./routes/api/shows");
 const seats = require("./routes/api/seats");
 const rows = require("./routes/api/rows");
+const halls = require("./routes/api/halls");
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use("/api/movies", movie);
 app.use("/api/shows", show);
 app.use("/api/seats", seats);
 app.use("/api/rows", rows);
+app.use("/api/halls", halls);
 
 const port = process.env.PORT || 1337;
 

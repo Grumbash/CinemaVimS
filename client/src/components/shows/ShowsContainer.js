@@ -7,6 +7,7 @@ import fetchItems from "../../hocs/fetchItems";
 import getShows from "../../actions/shows/getShowsAction";
 import api from "../../utils/apiMap";
 import { compose } from "redux";
+import OpenModalButton from "../common/OpenModalButton";
 
 class Shows extends Component {
   componentDidMount() {
@@ -27,17 +28,12 @@ class Shows extends Component {
     } else {
       return (
         <div>
-          {this.props.user.isAdmin && (
-            <button
-              type="button"
-              className="btn btn-success"
-              onClick={this.props.openModal}
-            >
-              <i className="fa fa-plus" /> <span>Add show</span>
-            </button>
-          )}
+          <OpenModalButton text="show" />
           {this.props.modal.isOpen && (
-            <ModalContainer path={this.props.location.pathname} />
+            <ModalContainer
+              path={this.props.location.pathname}
+              current="shows"
+            />
           )}
           {payload.map(show => (
             <Show key={show._id} {...show} />

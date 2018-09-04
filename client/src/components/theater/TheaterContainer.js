@@ -6,6 +6,7 @@ import fetchItems from "../../hocs/fetchItems";
 import setCurrentTheater from "../../actions/theater/setCurrentTheaterAction";
 import getTheater from "../../actions/theater/getTheaterAction";
 import api from "../../utils/apiMap";
+import ModalContainer from "../modal/ModalContainer";
 import DeleteButton from "../common/DeleteButton";
 import DeleteModal from "../deleteModal/DeleteModal";
 import { compose } from "redux";
@@ -13,8 +14,8 @@ import { compose } from "redux";
 class TheaterContainer extends Component {
   constructor(props) {
     super(props);
+    this.hallPath = `${api.theater}/${this.props.match.params.id}/halls`;
     this.path = `${api.theater}/${this.props.match.params.id}`;
-
     this.dispatch = this.props.dispatch;
   }
   componentWillMount() {
@@ -29,7 +30,6 @@ class TheaterContainer extends Component {
   render() {
     const { theater, loading } = this.props.field;
     const { user, modal } = this.props;
-    console.log(this.props);
     if (loading) {
       return (
         <div>
@@ -49,6 +49,9 @@ class TheaterContainer extends Component {
                 pathToBack={this.props.location.state.path}
               />
             )}
+          {this.props.modal.isOpen && (
+            <ModalContainer path={this.hallPath} current="halls" />
+          )}
           {user.isAdmin && <DeleteButton />}
         </div>
       );

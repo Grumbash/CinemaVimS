@@ -5,5 +5,6 @@ export default {
   theaters: "/api/theaters",
   shows: "/api/shows",
   rows: "/api/rows",
-  seats: "/api/seats"
+  seats: "/api/seats",
+  halls: "/api/halls"
 };

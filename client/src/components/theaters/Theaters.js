@@ -7,6 +7,7 @@ import getTheaters from "../../actions/theaters/getTheatersAction";
 import api from "../../utils/apiMap";
 import { compose } from "redux";
 import ModalContainer from "../modal/ModalContainer";
+import OpenModalButton from "../common/OpenModalButton";
 
 class Theaters extends Component {
   componentDidMount() {
@@ -31,16 +32,10 @@ class Theaters extends Component {
     } else {
       return (
         <div>
-          {this.props.user.isAdmin && (
-            <button
-              type="button"
-              className="btn btn-success"
-              onClick={this.props.openModal}
-            >
-              <i className="fa fa-plus" /> <span>Add theater</span>
-            </button>
+          <OpenModalButton text="theater" />
+          {this.props.modal.isOpen && (
+            <ModalContainer path={pathname} current="theaters" />
           )}
-          {this.props.modal.isOpen && <ModalContainer path={pathname} />}
           {payload.map(theater => (
             <Theater
               key={theater._id}

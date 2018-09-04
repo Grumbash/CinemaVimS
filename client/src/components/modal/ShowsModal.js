@@ -1,6 +1,9 @@
-import React, { Component } from "react";
+import SelectModal from "./SelectModal";
 import TextFieldGroup from "../common/TextFieldGroup";
-import moment from "moment";
+import React, { Component } from "react";
+import getHalls from "../../actions/halls/getHallsAction";
+import getMoviesAction from "../../actions/movies/getMoviesAction";
+import api from "../../utils/apiMap";
 import "./modal.css";
 
 export default class Modal extends Component {
@@ -24,14 +27,20 @@ export default class Modal extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  onSelect = e => {
+    console.log(e.target.value.substring(-1, 16));
+
+    // this.setState({ [e.target.name]: e.target.value });
+  };
+
+  componentWillMount = () => {
+    console.log(this.state);
+    getMoviesAction(api.movies)(this.props.dispatch);
+    getHalls(api.halls)(this.props.dispatch);
+  };
+
   getInputsValues = e => {
     const state = { ...this.state };
-    if (state.duration) {
-      state.duration = moment
-        .duration(state.duration)
-        .asSeconds()
-        .toString();
-    }
     this.props.postAction(`/api${this.props.path}`)(state)(this.props.dispatch);
     this.props.closeModal();
   };
@@ -54,15 +63,22 @@ export default class Modal extends Component {
           </div>
           <div className="modal-body">
             <form className="container" onSubmit={this.getInputsValues}>
-              {this.props.inputFields.map((name, idx) => (
-                <TextFieldGroup
-                  name={name}
-                  placeholder={name}
-                  key={idx}
-                  value={this.state[name]}
-                  onChange={this.onChange}
-                />
-              ))}
+              <SelectModal
+                name="movie"
+                options={this.props.movies.payload}
+                onChange={this.onSelect}
+              />
+              <SelectModal
+                name="hall"
+                options={this.props.halls.payload}
+                onChange={this.onSelect}
+              />
+              <TextFieldGroup
+                name="date"
+                placeholder="YYYY-MM-DD HH:MM:SS"
+                value={this.state.date}
+                onChange={this.onChange}
+              />
             </form>
           </div>
           <div className="modal-footer">

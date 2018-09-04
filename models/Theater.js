@@ -11,7 +11,13 @@ const TheaterSchema = new Schema({
   city: {
     type: String,
     required: true
-  }
+  },
+  halls: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "halls"
+    }
+  ]
 });
 
 module.exports = Theater = mongoose.model(

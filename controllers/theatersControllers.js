@@ -15,7 +15,7 @@ const {
   getAll_UniversalForAdmin
 } = require("./methods/admin/get_UniversalForAdmin");
 
-exports.postTheaterConrtroller = (req, res, next) => {
+exports.postTheaterConrtroller = (req, res) => {
   post_UniversalForAdmin(req, res, {
     Model: Theater,
     validateFunc: validateTheaterInputs
