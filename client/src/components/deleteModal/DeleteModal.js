@@ -13,7 +13,6 @@ export class DeleteModal extends Component {
     );
   };
   render() {
-    console.log(this.props);
     if (this.props.purposeOfRemoval) {
       return (
         <div className="modal-dialog modal-dialog-centered modal-react">

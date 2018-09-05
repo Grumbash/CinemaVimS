@@ -20,6 +20,7 @@ export const HALLS_LOADING = "HALLS_LOADING";
 export const HALLS_NOT_FOUND = "HALLS_NOT_FOUND";
 export const HALL_NOT_FOUND = "HALL_NOT_FOUND";
 export const SET_CURRENT_HALL = "SET_CURRENT_HALL";
+export const SET_HALL_SCHEMA = "SET_HALL_SCHEMA";
 
 // Theaters
 export const GET_THEATERS = "GET_THEATERS";

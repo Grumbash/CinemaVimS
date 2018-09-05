@@ -12,6 +12,8 @@ class SeatsContainer extends Component {
     this.reserv = this.props.reservation.filter(
       reserv => reserv.show._id === this.props.currentShow
     )[0];
+    console.log(this.reserv);
+
     this.path = `${api.seats}/${this.reserv.show.hallId}/${
       this.props._id
     }/reservation`;

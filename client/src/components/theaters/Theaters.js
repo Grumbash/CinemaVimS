@@ -19,8 +19,7 @@ class Theaters extends Component {
   render() {
     const {
       field: { payload, loading },
-      user,
-      location: { pathname }
+      user
     } = this.props;
 
     if (loading) {
@@ -34,7 +33,7 @@ class Theaters extends Component {
         <div>
           <OpenModalButton text="theater" />
           {this.props.modal.isOpen && (
-            <ModalContainer path={pathname} current="theaters" />
+            <ModalContainer path={api.theater} current="theaters" />
           )}
           {payload.map(theater => (
             <Theater

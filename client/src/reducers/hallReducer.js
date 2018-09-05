@@ -2,7 +2,8 @@ import {
   GET_HALL,
   HALL_LOADING,
   POST_HALL,
-  HALL_NOT_FOUND
+  HALL_NOT_FOUND,
+  SET_HALL_SCHEMA
 } from "../actions/types";
 const initialState = {
   loading: false,
@@ -10,7 +11,8 @@ const initialState = {
     shows: [],
     _id: "",
     No: "",
-    theaterId: ""
+    theaterId: "",
+    rows: []
   }
 };
 
@@ -23,6 +25,8 @@ export default function(state = initialState, action) {
     case POST_HALL:
       return { ...state, payload: action.payload, loading: false };
     case HALL_NOT_FOUND:
+      return { ...state, payload: action.payload, loading: false };
+    case SET_HALL_SCHEMA:
       return { ...state, payload: action.payload, loading: false };
     default:
       return state;

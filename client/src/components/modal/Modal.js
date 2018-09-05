@@ -32,7 +32,8 @@ export default class Modal extends Component {
         .asSeconds()
         .toString();
     }
-    this.props.postAction(`/api${this.props.path}`)(state)(this.props.dispatch);
+    console.log(this.props);
+    this.props.postAction(this.props.path)(state)(this.props.dispatch);
     this.props.closeModal();
   };
 
